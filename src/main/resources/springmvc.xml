@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"              
+    xsi:schemaLocation="http://www.springframework.org/schema/beans    
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+            http://www.springframework.org/schema/context     
+            http://www.springframework.org/schema/context/spring-context.xsd    
+            http://www.springframework.org/schema/tx   
+            http://www.springframework.org/schema/tx/spring-tx.xsd  
+            http://www.springframework.org/schema/aop  
+            http://www.springframework.org/schema/aop/spring-aop.xsd ">
+	<!-- 实际开发可以开启组件扫描 -->
+	<context:component-scan base-package="zhku.jsj141.ssm.controller"></context:component-scan>
+	<!-- 注解扫描 -->
+	<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+	<!-- 视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 前缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<!-- 后缀 -->
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 自定义参数绑定 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="zhku.jsj141.ssm.controller.converter.testConverter"/>
+			</list>
+		</property>
+	</bean>
+</beans>
