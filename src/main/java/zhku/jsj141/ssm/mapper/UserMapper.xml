@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="zhku.jsj141.ssm.mapper.UserMapper">
 	<insert id="insertUser" parameterType="zhku.jsj141.ssm.po.User">
-		insert into t_user(username,password,email,code) value(#{username},#{password},#{email},#{code});
+		insert into
+		t_user(username,password,email,code)
+		value(#{username},#{password},#{email},#{code});
 	</insert>
 	<select id="findUser" parameterType="int" resultType="zhku.jsj141.ssm.po.User">
-		select * from t_user where uid = #{value};
+		select *
+		from t_user where uid = #{value};
 	</select>
 	<update id="updateUser" parameterType="zhku.jsj141.ssm.po.User">
-		update t_user set username=#{username} where uid = #{uid}
+		update t_user set
+		username=#{username} where uid = #{uid}
 	</update>
 	<delete id="deleteUser" parameterType="int">
-		delete from t_user where uid = #{value}
+		delete from t_user where
+		uid = #{value}
 	</delete>
 </mapper>
