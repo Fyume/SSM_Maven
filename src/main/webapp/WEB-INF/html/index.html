@@ -6,18 +6,41 @@
 <link rel="stylesheet" href="/SSM_Maven/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/SSM_Maven/css/index.css">
 </head>
-<body style="background-color:white;">
+<body>
 <div id="Top">
 	<ul>
-		<li onclick="left_on(this)"><span class="glyphicon glyphicon-th-list" style="font-size:25px;"></span></li>
+		<li title="首页"><a href="/SSM_Maven/"><span class="glyphicon glyphicon-home" style="font-size:25px;margin-top:2px;"></span></a></li>
+	</ul>
+	<ul class="pull-right">
+		<li onclick="right_on(this)"><span class="glyphicon glyphicon-th-list" style="font-size:25px;"></span></li>
 	</ul>
 </div>
-<div id="Left">
-	<ul id="Left_ul" class="nav navbar-nav">
-		<li><a>1</a></li>
-		<li><a>1</a></li>
-		<li><a>1</a></li>
+<div id="Right">
+	<ul id="Right_ul" class="nav navbar-nav">
+		<li style="height:200px;cursor:default;">
+			<span title="登出" class="glyphicon glyphicon-log-out" style="float:right;font-size:18px;"></span>
+			<img class="col-lg-8 row-lg-8" style="border-radius:131px;margin-top:10px;margin-left:35px;" alt="头像" title="头像" src="/SSM_Maven/img/user/img-default.jpg">
+			<div class="col-lg-12 row-lg-6" title="Fyume">
+				<span>Fyume</span>
+			</div>
+			<div class="col-lg-12 row-lg-6" title="454628528@qq.com"><span class="glyphicon glyphicon-envelope">454628528@qq.com</span></div>
+			<div class="col-lg-12 row-lg-6" style="margin-top:8px;">
+				<div class="col-lg-4 row-lg-2" title="Lv4" style="border-top:1px red solid;border-bottom:1px red solid;border-radius:5px;">
+					Lv4
+				</div>
+				<div class="col-lg-8" style="float:right;text-align:left;margin-top:8px;height:6px;border:1px #c0c0c0 solid;">
+					<div class="col-lg-10 pull-left" title="10/12" style="margin-left:-19%;height:100%;background-color:yellow;">
+					</div>
+				</div>
+			</div>
+		</li>
+		<li><a>消息</a></li>
+		<li><a>收藏夹</a></li>
+		<li><a>个人中心</a></li>
 	</ul>
+</div>
+<div id="Bottom">
+	
 </div>
 </body>
 <script type="text/javascript" src="/SSM_Maven/js/jquery-3.2.1.min.js"></script>
