@@ -29,7 +29,8 @@
 
 		<property name="maxIdleTime" value="1800"></property>
 		<property name="maxStatements" value="0"></property>
-		<property name="idleConnectionTestPeriod" value="3"></property>
+		<!-- 每多少秒检查一次空闲连接 -->
+		<property name="idleConnectionTestPeriod" value="60"></property>
 		<property name="breakAfterAcquireFailure" value="true"></property>
 	</bean>
 	<!-- sqlSessionFactory -->

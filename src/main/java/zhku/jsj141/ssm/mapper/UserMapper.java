@@ -6,10 +6,10 @@ public interface UserMapper {
 	
 	public void insertUser(User user) throws Exception;
 	
-	public User findUser(int uid) throws Exception;
+	public User findUser(String uid) throws Exception;
 	
 	public void updateUser(User user) throws Exception;
 	
-	public void deleteUser(int uid) throws Exception;
+	public void deleteUser(String uid) throws Exception;
 	
 }

@@ -16,22 +16,49 @@
 	<!-- 实际开发可以开启组件扫描 -->
 	<context:component-scan base-package="zhku.jsj141.ssm.controller"></context:component-scan>
 	<!-- 注解扫描 -->
-	<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator"></mvc:annotation-driven>
 	<!-- 视图解析器 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 前缀 -->
-		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="prefix" value="/WEB-INF/html/" />
 		<!-- 后缀 -->
-		<property name="suffix" value=".jsp" />
+		<property name="suffix" value=".html" />
 	</bean>
-
+	<!-- 全局异常处理器 -->
+	<bean id="testExceptionResolver" class="zhku.jsj141.ssm.Exception.testExceptionResolver"></bean>
+	<!-- springMVC文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的最大大小 这里是5MB-->
+		<property name="maxUploadSize">
+			<value>5242880</value>
+		</property>
+	</bean>
+	<!-- hibernate validation(校验器) -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+		<!-- 指定校验使用的资源文件 默认使用classpath下的ValitionMessage.properties -->
+		<property name="validationMessageSource" ref="messageSource"></property>
+	</bean>
+	<!-- 校验  错误信息 配置文件 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<!-- 资源文件名 -->
+		<property name="basenames">
+			<list>
+				<value>classpath:TestValitionMessage</value>
+			</list>
+		</property>
+		<!-- 资源文件编码 -->
+		<property name="fileEncodings" value="utf-8"></property>
+		<!-- 资源文件内容缓存的时间（单位 秒） -->
+		<property name="cacheSeconds" value="120"></property>
+	</bean>
 	<!-- 自定义参数绑定 -->
 	<bean id="conversionService"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class="zhku.jsj141.ssm.controller.converter.testConverter" />
+				<bean class="zhku.jsj141.ssm.converter.testConverter" />
 			</list>
 		</property>
 	</bean>

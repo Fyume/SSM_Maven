@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		t_user(username,password,email,code)
 		value(#{username},#{password},#{email},#{code});
 	</insert>
-	<select id="findUser" parameterType="int" resultType="zhku.jsj141.ssm.po.User">
+	<select id="findUser" parameterType="String" resultType="zhku.jsj141.ssm.po.User">
 		select *
 		from t_user where uid = #{value};
 	</select>
@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update t_user set
 		username=#{username} where uid = #{uid}
 	</update>
-	<delete id="deleteUser" parameterType="int">
+	<delete id="deleteUser" parameterType="String">
 		delete from t_user where
 		uid = #{value}
 	</delete>

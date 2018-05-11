@@ -9,7 +9,7 @@ import zhku.jsj141.ssm.service.UserService;
 public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserMapper userMapper;
-	public User findUser(int uid) throws Exception{
+	public User findUser(String uid) throws Exception{
 		return userMapper.findUser(uid);
 	}
 }

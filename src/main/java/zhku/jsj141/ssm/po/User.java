@@ -1,15 +1,22 @@
 package zhku.jsj141.ssm.po;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import zhku.jsj141.ssm.validation.ValidGroup1;
+
 public class User {
-	private int uid;
+	@Size(min=2,max=20,message="111",groups={ValidGroup1.class})
+	private String uid;
 	private String username;
 	private String password;
+	@NotNull(message="222")
 	private String email;
 	private String code;
-	public int getUid() {
+	public String getUid() {
 		return uid;
 	}
-	public void setUid(int uid) {
+	public void setUid(String uid) {
 		this.uid = uid;
 	}
 	public String getUsername() {
