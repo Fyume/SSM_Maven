@@ -1,7 +1,9 @@
 package zhku.jsj141.ssm.mapper;
 
-import zhku.jsj141.ssm.po.User;
+import org.springframework.stereotype.Repository;
 
+import zhku.jsj141.ssm.po.User;
+@Repository
 public interface UserMapper {
 	
 	public void insertUser(User user) throws Exception;

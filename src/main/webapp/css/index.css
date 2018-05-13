@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 body{
-	background-color:white;
+	background-color:#ffffff;
 }
 ul,li{
 	list-style: none;
@@ -20,7 +20,7 @@ li:hover{
 	color:#ff8000;
 }
 #Top{
-	position:fixed;top:0;left:0;width:100%;height:50px;border-bottom:2px #c0c0c0 solid;
+	position:fixed;z-index:1;top:0;left:0;width:100%;height:50px;border-bottom:2px #c0c0c0 solid;background-color:white;
 }
 #Top li{
 	margin-top:8px;
@@ -32,9 +32,10 @@ li:hover{
 }
 #Right{
 	position:fixed;
+	z-index:-1;
+	background-color:white;
 	right:0;
 	top:50px;
-	height:600px;
 	width:200px;
 }
 #Right .nav li{
@@ -62,4 +63,35 @@ li:hover{
 @keyframes liLeave{
 	0%{right:0;}
 	100%{right:-200px;}
+}
+#topOn{
+	display:none;position:fixed;z-index:1;width:30px;height:30px;top:0;left:700px;font-size: 20px;
+}
+@keyframes topClose{
+	0%{top:0;}
+	100%{top:-50px;}
+}
+@keyframes topOpen{
+	0%{top:-50px;}
+	100%{top:0;}
+}
+#Bottom{
+	z-index:0;
+	position:absolute;
+	z-index:0;
+	left:0;
+	top:0;
+	width:100%;
+}
+#Bottom div ul{
+	padding-top:50px;
+	border-bottom:2px red solid;
+}
+#Bottom div ul li{
+	border-left:1px #c0c0c0 dotted;
+	border-right:1px #c0c0c0 dotted;
+	float:left;
+	width:90px;
+	height:50px;
+	padding-top:12px;
 }

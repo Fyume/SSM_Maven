@@ -7,41 +7,70 @@
 <link rel="stylesheet" type="text/css" href="/SSM_Maven/css/index.css">
 </head>
 <body>
-<div id="Top">
-	<ul>
-		<li title="首页"><a href="/SSM_Maven/"><span class="glyphicon glyphicon-home" style="font-size:25px;margin-top:2px;"></span></a></li>
-	</ul>
-	<ul class="pull-right">
-		<li onclick="right_on(this)"><span class="glyphicon glyphicon-th-list" style="font-size:25px;"></span></li>
-	</ul>
-</div>
-<div id="Right">
-	<ul id="Right_ul" class="nav navbar-nav">
-		<li style="height:200px;cursor:default;">
-			<span title="登出" class="glyphicon glyphicon-log-out" style="float:right;font-size:18px;"></span>
-			<img class="col-lg-8 row-lg-8" style="border-radius:131px;margin-top:10px;margin-left:35px;" alt="头像" title="头像" src="/SSM_Maven/img/user/img-default.jpg">
-			<div class="col-lg-12 row-lg-6" title="Fyume">
-				<span>Fyume</span>
-			</div>
-			<div class="col-lg-12 row-lg-6" title="454628528@qq.com"><span class="glyphicon glyphicon-envelope">454628528@qq.com</span></div>
-			<div class="col-lg-12 row-lg-6" style="margin-top:8px;">
-				<div class="col-lg-4 row-lg-2" title="Lv4" style="border-top:1px red solid;border-bottom:1px red solid;border-radius:5px;">
-					Lv4
+	<!-- 顶部 -->
+	<div id="Top">
+		<ul>
+			<li title="首页"><a href="/SSM_Maven/"><span class="glyphicon glyphicon-home" style="font-size:25px;margin-top:2px;"></span></a></li>
+		</ul>
+		<ul class="pull-right">
+			<li id="right_btn" onclick="right_on(this)"><span class="glyphicon glyphicon-th-list" style="font-size:25px;"></span></li>
+		</ul>
+		<ul style="width:30px;height:30px;margin:0 auto;">
+			<li style="width:30px;height:30px;font-size: 20px;" onclick="TopClose()"><span class="glyphicon glyphicon-triangle-top"></span></li>
+		</ul>
+	</div>
+	<li id="topOn" onclick="TopOpen(this)"><span class="glyphicon glyphicon-triangle-bottom"></span></li>
+	<!-- 右侧信息导航栏 -->
+	<div id="Right">
+		<ul id="Right_ul" class="nav navbar-nav">
+			<li style="height:200px;cursor:default;">
+				<span title="登出" class="glyphicon glyphicon-log-out" style="float:right;font-size:18px;"></span>
+				<img class="col-lg-8 row-lg-8" style="border-radius:131px;margin-top:10px;margin-left:35px;" alt="头像" title="头像" src="/SSM_Maven/img/user/img-default.jpg">
+				<div class="col-lg-12 row-lg-6" title="Fyume">
+					<span id="uid">Fyume</span>
 				</div>
-				<div class="col-lg-8" style="float:right;text-align:left;margin-top:8px;height:6px;border:1px #c0c0c0 solid;">
-					<div class="col-lg-10 pull-left" title="10/12" style="margin-left:-19%;height:100%;background-color:yellow;">
+				<div class="col-lg-12 row-lg-6" title="454628528@qq.com"><span class="glyphicon glyphicon-envelope">454628528@qq.com</span></div>
+				<div class="col-lg-12 row-lg-6" style="margin-top:8px;">
+					<div class="col-lg-4 row-lg-2" title="Lv4" style="border-top:1px red solid;border-bottom:1px red solid;border-radius:5px;">
+						Lv4
+					</div>
+					<div class="col-lg-8" style="float:right;text-align:left;margin-top:8px;height:6px;border:1px #c0c0c0 solid;">
+						<div class="col-lg-10 pull-left" title="10/12" style="margin-left:-19%;height:100%;background-color:yellow;">
+						</div>
 					</div>
 				</div>
+			</li>
+			<li><a>消息</a></li>
+			<li><a>收藏夹</a></li>
+			<li><a>个人中心</a></li>
+		</ul>
+	</div>
+	<!-- 内容显示部分 -->
+	<div id="Bottom" class="container">
+		<div style="width:90%;height:100px;margin:0 auto;border:2px #c0c0c0 solid;border-top:0;border-bottom-left-radius:20px;border-bottom-right-radius:20px;">
+			<ul>
+				<li>111</li>
+				<li>111</li>
+				<li>111</li>
+				<li>111</li>
+				<li>111</li>
+				<li>111</li>
+			</ul>
+		</div>
+		<div class="col-lg-12" style="height:360px;border-bottom:1px #c0c0c0 solid;margin:0 auto;margin-top:20px;">
+			<div style="width:300px;height:20px;margin:0 auto;" class="input-group">
+				<input class="col-lg-6" id="toID" type="text" placeholder="连接对象ID">
+				<input class="btn btn-info input-group-addon" style="width:100px;border-top-left-radius:0;border-bottom-left-radius:0;" type="button" value="建立连接" onclick="getCon()">
 			</div>
-		</li>
-		<li><a>消息</a></li>
-		<li><a>收藏夹</a></li>
-		<li><a>个人中心</a></li>
-	</ul>
-</div>
-<div id="Bottom">
-	
-</div>
+			<div style="width:600px;height:310px;overflow:auto;border:1px green solid;margin:0 auto;">
+				<div style="width:100%;height:250px;border:1px red solid;" id="returnMessage"></div>
+				<div style="width:300px;height:50px;margin:0 auto;" class="input-group">
+					<input class="col-lg-6" id="message" type="text" placeholder="输入消息">
+					<input class="btn btn-info input-group-addon" style="width:100px;border-top-left-radius:0;border-bottom-left-radius:0;" type="button" value="发送" onclick="send()">
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script type="text/javascript" src="/SSM_Maven/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/SSM_Maven/js/bootstrap.min.js"></script>

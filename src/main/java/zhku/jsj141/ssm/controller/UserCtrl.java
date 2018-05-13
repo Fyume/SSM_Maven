@@ -1,11 +1,6 @@
 package zhku.jsj141.ssm.controller;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +21,7 @@ import zhku.jsj141.ssm.validation.ValidGroup1;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserCtrl {
 	@Autowired
 	private UserService userService;
 
