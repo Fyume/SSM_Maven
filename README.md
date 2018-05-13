@@ -40,7 +40,8 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 >
 > （这个拦截器我好像还没用到，毕竟websocketSession和http那个是不同的）
 >
-> 	public class MyHandshakeInterceptor implements HandshakeInterceptor{
+> ```java
+>  public class MyHandshakeInterceptor implements HandshakeInterceptor{
 > 	  public void afterHandshake(ServerHttpRequest request,  
 > 	          ServerHttpResponse response, WebSocketHandler wsHandler,  
 > 	          Exception ex) {
@@ -53,10 +54,10 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	       System.out.println("Before Handshake");  
 > 	       return true;  
 > 	  }  
-> 	}  
->
+> 	} 
+>```
 > **3.url映射配置类**
->
+>```java
 > 	@Configuration
 > 	@EnableWebSocket
 > 	public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
@@ -70,8 +71,9 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	     registry.addHandler(myHander, "/webSocket.do").addInterceptors(new MyHandshakeInterceptor()).setAllowedOrigins("*");
 > 	    }
 > 	}
+>```
 > **4.处理器（ctrl）**
->
+>```java
 > 	public class WebSocketCtrl implements WebSocketHandler{
 > 	    private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();
 > 	    public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
@@ -117,9 +119,10 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	   public boolean supportsPartialMessages() {
 > 		return false;
 > 	   }
+>```
 > 自定义部分：
 >
->
+>```java
 > 	  /**
 > 	   * 给所有在线用户发送消息
 > 	   *
@@ -159,8 +162,9 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	      }
 > 	  }
 > 	}
+>```
 > **5.前端js**
->
+>```javaScript
 > 	function getCon(){//创建连接并配置各个状态的回调
 > 	if (typeof WebSocket != 'undefined') {
 > 		setMessageInnerHTML("连接中....");
@@ -189,16 +193,21 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 		websocket.close();
 > 	  };
 > 	}
+>```
 > //将消息显示在网页上 
+>```javaScript
 > function setMessageInnerHTML(innerHTML){
 > $("#returnMessage").html($("#returnMessage").html()+innerHTML +"<br/>");
 > }
+>```
 > //手动关闭连接
->
+>```javaScript
 > function closeWebSocket(){
 > websocket.close();
 > }
+>```
 > //发送消息
+>```javaScript
 > function send(){
 > //接收者名称
 > var to = $("#toID").val();
@@ -220,6 +229,7 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > var str = JSON.stringify(json)
 > websocket.send(str);
 > }
+>```
 
 
 
