@@ -29,6 +29,7 @@ public class WebSocketCtrl implements WebSocketHandler{
 
 	public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
         System.out.println("链接关闭......" + closeStatus.toString());
+        //这里可以结合redis操作登录表
         users.remove(webSocketSession);
     }
 
@@ -40,7 +41,7 @@ public class WebSocketCtrl implements WebSocketHandler{
             int count = 5;
             session.sendMessage(new TextMessage(count + ""));
         }*/
-        session.sendMessage(new TextMessage("欢迎使用测试聊天平台~~"));
+        session.sendMessage(new TextMessage("欢迎使用聊天平台(测试中)~~"));
     }
 
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> webSocketMessage) throws Exception {
