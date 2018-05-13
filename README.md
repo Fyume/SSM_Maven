@@ -190,36 +190,36 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	  };
 > 	}
 > //将消息显示在网页上 
->     function setMessageInnerHTML(innerHTML){
->       $("#returnMessage").html($("#returnMessage").html()+innerHTML +"<br/>");
->     }
+> function setMessageInnerHTML(innerHTML){
+> $("#returnMessage").html($("#returnMessage").html()+innerHTML +"<br/>");
+> }
 > //手动关闭连接
 >
->     function closeWebSocket(){
->         websocket.close();
->     }
+> function closeWebSocket(){
+> websocket.close();
+> }
 > //发送消息
->     function send(){
->     //接收者名称
->     var to = $("#toID").val();
->     if('' == to){
->         alert("请填写接收者");
->         return false;
->     }
->     //发送的消息
->     var message = $("#message").val();
->     if('' == message){
->         alert("请填写发送信息");
->         return false;
->     }
->     var json = {
->     		from:$("#uid").html(),
->     		to:to,
->     		message:message
->     }
->     var str = JSON.stringify(json)
->     websocket.send(str);
->     }
+> function send(){
+> //接收者名称
+> var to = $("#toID").val();
+> if('' == to){
+> alert("请填写接收者");
+> return false;
+> }
+> //发送的消息
+> var message = $("#message").val();
+> if('' == message){
+> alert("请填写发送信息");
+> return false;
+> }
+> var json = {
+> 		from:$("#uid").html(),
+> 		to:to,
+> 		message:message
+> }
+> var str = JSON.stringify(json)
+> websocket.send(str);
+> }
 
 
 
