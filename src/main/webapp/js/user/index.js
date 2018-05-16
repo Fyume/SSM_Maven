@@ -1,5 +1,64 @@
 var li = $("#Right #Right_ul li");
 var last = $("#Right #Right_ul li:last");
+$(document).ready(function(){
+	$("#Right_ul").load("/SSM_Maven/html/login.html");
+	$("#returnMessage").scrollTop($("#returnMessage").height());
+	//聊天窗口
+	$("#move").mousedown(function(e){
+		var offset = $("#chartBox").offset();
+		$(document).bind('selectstart',function(){
+			return false;
+		});
+		var x = e.pageX - offset.left;
+		var y = e.pageY - offset.top;
+		$(document).mousemove(function(e){
+			var x_ = e.pageX - x - 300;
+			var y_ = e.pageY - y - 100;
+			$("#chartBox").css("top",y_+"px");
+			$("#chartBox").css("left",x_+"px");
+			/*$("#chartBox").animate({left:x_+"px",top:y_+"px"},1);*/
+		}).mouseup(function(){  
+	        $(this).unbind("mousemove");
+	        $(this).selectstart(function(){
+				return true;
+			});
+	    });
+	});
+	if($.cookie('ssm_m_user')!=undefined){//假如有cookie
+		$.ajax({
+			url:'/SSM_Maven/user/login.do',
+			type:'post',
+			timeout : 1000,
+			dataType:'json',
+			cache:false,
+			success: function (data){
+				if(data==true){
+					$("#Right_ul").load("/SSM_Maven/html/index_user.html");
+				}else{
+					$("#Right_ul").load("/SSM_Maven/html/login.html");
+				}
+			},
+		});
+	}
+});
+function MyAjax(url,data,succF,errF){
+	$.ajax({
+		url:url,
+		data:data,
+		dataType:'json',
+		cache:false,
+		success:function(){
+			succF;
+		},
+		error:function(){
+			errF;
+		}
+	});
+}
+function Reset(){
+	li = $("#Right #Right_ul li");
+	last = $("#Right #Right_ul li:last");
+}
 function disappear(str){
 	$(str).css("display","none");
 }
@@ -7,6 +66,7 @@ function appear(str){
 	$(str).css("z-index",1);
 }
 function right_on($this){
+	Reset();
 	$($this).attr("onclick","right_off(this)");
 	appear("#Right");
 	var rightOn = window.setInterval("liMove(0)",300);
@@ -31,6 +91,7 @@ function liMove(num){
 	}
 }
 function right_off($this){
+	Reset();
 	$($this).attr("onclick","right_on(this)");
 	$("#Right").css("z-index","-1");
 	var rightOff = window.setInterval("liMove(1)",100);
@@ -61,10 +122,63 @@ function TopOpen($this){
 	$("#Top").css("display","block");
 	$($this).css("display","none");
 }
+/******注册*****/
+function registerOn(){
+	$("#Right_ul").load("/SSM_Maven/html/register.html");
+}
+function visibility(){
+	var type = $("#password").attr("type");
+	if(type=='password'){
+		$("#visibility").removeClass("glyphicon-eye-close");
+		$("#visibility").addClass("glyphicon-eye-open");
+		$("#password").attr("type","text");
+	}else if(type=='text'){
+		$("#visibility").removeClass("glyphicon-eye-open");
+		$("#visibility").addClass("glyphicon-eye-close");
+		$("#password").attr("type","password");
+	}
+}
+function register(){
+	$.ajax({
+		url:'/SSM_Maven/user/register.do',
+		type:'POST',
+		data:$("#RegisterForm").serialize(),
+		dataType:'JSON',
+		async:false,
+		cache:false,
+		success:function(data){
+			if(data.result=="true"){
+				alert("注册成功，请确认查收激活邮件");
+			}else{
+				alert("注册失败");
+			}
+		},
+	});
+}
+/*****登录*****/
+function loginOn(){
+	$("#Right_ul").load("/SSM_Maven/html/login.html");
+}
+function login(){
+	/*$.ajax({
+		url:'/SSM_Maven/user/login.do',
+		type:'POST',
+		data:$("#LoginForm").serialize(),
+		dataType:'json',
+		async:false,
+		cache:false,
+		success:function(){
+			alert("111");
+		},
+	});*/
+	$("#LoginForm").ajaxSubmit();
+	alert("111");
+}
+
 //websocket
 function getCon(){
 	if (typeof WebSocket != 'undefined') {
-		setMessageInnerHTML("连接中....");
+		$("#btn_Con1").val("连接中...");
 		websocket = new WebSocket("ws://localhost:8080/SSM_Maven/webSocket.do");
 	}else{
 		alert('该浏览器不支持websocket,建议更换浏览器');
@@ -73,17 +187,24 @@ function getCon(){
 		$("#returnMessage").html($("#returnMessage").html()+event.data +"<br/>");
 	};
 	websocket.onerror = function(){
-		setMessageInnerHTML("连接失败");
+		$("#btn_Con1").val("连接失败");
     };
     websocket.onopen = function(event){
-    	setMessageInnerHTML("连接创建成功....");
+    	$("#btn_Con1").val("连接成功");
+    	$("#btn_Con1").attr("onclick","");
+    	$("#btn_Con1").addClass("disabled");
+    	$("#btn_Con2").removeClass("disabled");
     	var json = {
     		uid : $("#uid").html()
     	}
     	websocket.send(JSON.stringify(json));
     };
 	websocket.onclose = function(){
-	   setMessageInnerHTML("连接已关闭");
+		$("#btn_Con1").val("建立连接");
+		$("#btn_Con1").attr("onclick","getCon()");
+		$("#btn_Con2").addClass("disabled");
+    	$("#btn_Con1").removeClass("disabled");
+    	setMessageInnerHTML("连接已关闭");
    };
    //关闭窗口前先确保关闭了socket连接
 	window.onbeforeunload = function(){
@@ -94,7 +215,7 @@ function getCon(){
 function setMessageInnerHTML(innerHTML){
     $("#returnMessage").html($("#returnMessage").html()+innerHTML +"<br/>");
 }
-function closeWebSocket(){
+function closeCon(){
     websocket.close();
 }
 //发送消息

@@ -1,23 +1,179 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper  
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="zhku.jsj141.ssm.mapper.UserMapper">
-	<insert id="insertUser" parameterType="zhku.jsj141.ssm.po.User">
-		insert into
-		t_user(username,password,email,code)
-		value(#{username},#{password},#{email},#{code});
-	</insert>
-	<select id="findUser" parameterType="String" resultType="zhku.jsj141.ssm.po.User">
-		select *
-		from t_user where uid = #{value};
-	</select>
-	<update id="updateUser" parameterType="zhku.jsj141.ssm.po.User">
-		update t_user set
-		username=#{username} where uid = #{uid}
-	</update>
-	<delete id="deleteUser" parameterType="String">
-		delete from t_user where
-		uid = #{value}
-	</delete>
+  <resultMap id="BaseResultMap" type="zhku.jsj141.ssm.po.User">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="telnum" jdbcType="VARCHAR" property="telnum" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="email2" jdbcType="VARCHAR" property="email2" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="activateTime" jdbcType="BIGINT" property="activatetime" />
+    <result column="ps_false" jdbcType="INTEGER" property="psFalse" />
+    <result column="ps_time" jdbcType="BIGINT" property="psTime" />
+    <result column="psCode" jdbcType="VARCHAR" property="pscode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, username, password, telnum, email, email2, image, code, activateTime, ps_false, 
+    ps_time, psCode
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="zhku.jsj141.ssm.po.User">
+    <!-- <selectKey keyProperty="uid" order="BEFORE" resultType="java.lang.String">
+      selectuuid_short()
+    </selectKey> -->
+    insert into t_user (uid, username, password, 
+      telnum, email, email2, 
+      image, code, activateTime, 
+      ps_false, ps_time, psCode
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{telnum,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{email2,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{activatetime,jdbcType=BIGINT}, 
+      #{psFalse,jdbcType=INTEGER}, #{psTime,jdbcType=BIGINT}, #{pscode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="zhku.jsj141.ssm.po.User">
+    <!-- <selectKey keyProperty="uid" order="BEFORE" resultType="java.lang.String">
+      selectuuid_short()
+    </selectKey> -->
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      uid,
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="telnum != null">
+        telnum,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="email2 != null">
+        email2,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="activatetime != null">
+        activateTime,
+      </if>
+      <if test="psFalse != null">
+        ps_false,
+      </if>
+      <if test="psTime != null">
+        ps_time,
+      </if>
+      <if test="pscode != null">
+        psCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{uid,jdbcType=VARCHAR},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telnum != null">
+        #{telnum,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="email2 != null">
+        #{email2,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="activatetime != null">
+        #{activatetime,jdbcType=BIGINT},
+      </if>
+      <if test="psFalse != null">
+        #{psFalse,jdbcType=INTEGER},
+      </if>
+      <if test="psTime != null">
+        #{psTime,jdbcType=BIGINT},
+      </if>
+      <if test="pscode != null">
+        #{pscode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zhku.jsj141.ssm.po.User">
+    update t_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telnum != null">
+        telnum = #{telnum,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="email2 != null">
+        email2 = #{email2,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="activatetime != null">
+        activateTime = #{activatetime,jdbcType=BIGINT},
+      </if>
+      <if test="psFalse != null">
+        ps_false = #{psFalse,jdbcType=INTEGER},
+      </if>
+      <if test="psTime != null">
+        ps_time = #{psTime,jdbcType=BIGINT},
+      </if>
+      <if test="pscode != null">
+        psCode = #{pscode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhku.jsj141.ssm.po.User">
+    update t_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      telnum = #{telnum,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      email2 = #{email2,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      activateTime = #{activatetime,jdbcType=BIGINT},
+      ps_false = #{psFalse,jdbcType=INTEGER},
+      ps_time = #{psTime,jdbcType=BIGINT},
+      psCode = #{pscode,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
 </mapper>

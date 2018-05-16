@@ -14,7 +14,19 @@
 
 不用jsp了，用html，前后端分离下吧，el太乱了
 
-（虽然还是不想用框架（angularjs也就上过选修课的程度））
+（虽然还是不想用框架（angularjs也就上过选修课的程度））:sweat:
+
+结果发现websocket即时通信的话 根本除了登录，不需要操作数据库...又不想帮他们保存聊天记录。。。所以webSocket还是只当一个小功能插件之类的东西算了。
+
+再想一个题目。
+
+-------------------
+
+暂定需求：
+
+注册可进
+
+激活可使用（拦截器咯）
 
 ------
 
@@ -41,7 +53,7 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > （这个拦截器我好像还没用到，毕竟websocketSession和http那个是不同的）
 >
 > ```java
->  public class MyHandshakeInterceptor implements HandshakeInterceptor{
+> public class MyHandshakeInterceptor implements HandshakeInterceptor{
 > 	  public void afterHandshake(ServerHttpRequest request,  
 > 	          ServerHttpResponse response, WebSocketHandler wsHandler,  
 > 	          Exception ex) {
@@ -55,9 +67,9 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	       return true;  
 > 	  }  
 > 	} 
->```
+> ```
 > **3.url映射配置类**
->```java
+> ```java
 > 	@Configuration
 > 	@EnableWebSocket
 > 	public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
@@ -71,9 +83,9 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	     registry.addHandler(myHander, "/webSocket.do").addInterceptors(new MyHandshakeInterceptor()).setAllowedOrigins("*");
 > 	    }
 > 	}
->```
+> ```
 > **4.处理器（ctrl）**
->```java
+> ```java
 > 	public class WebSocketCtrl implements WebSocketHandler{
 > 	    private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();
 > 	    public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
@@ -119,10 +131,10 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	   public boolean supportsPartialMessages() {
 > 		return false;
 > 	   }
->```
+> ```
 > 自定义部分：
 >
->```java
+> ```java
 > 	  /**
 > 	   * 给所有在线用户发送消息
 > 	   *
@@ -162,9 +174,9 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	      }
 > 	  }
 > 	}
->```
+> ```
 > **5.前端js**
->```javaScript
+> ```javaScript
 > 	function getCon(){//创建连接并配置各个状态的回调
 > 	if (typeof WebSocket != 'undefined') {
 > 		setMessageInnerHTML("连接中....");
@@ -193,21 +205,21 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 		websocket.close();
 > 	  };
 > 	}
->```
+> ```
 > //将消息显示在网页上 
->```javaScript
+> ```javaScript
 > function setMessageInnerHTML(innerHTML){
 > $("#returnMessage").html($("#returnMessage").html()+innerHTML +"<br/>");
 > }
->```
+> ```
 > //手动关闭连接
->```javaScript
+> ```javaScript
 > function closeWebSocket(){
 > websocket.close();
 > }
->```
+> ```
 > //发送消息
->```javaScript
+> ```javaScript
 > function send(){
 > //接收者名称
 > var to = $("#toID").val();
@@ -229,7 +241,7 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > var str = JSON.stringify(json)
 > websocket.send(str);
 > }
->```
+> ```
 
 
 

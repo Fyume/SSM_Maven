@@ -10,7 +10,11 @@ import zhku.jsj141.ssm.service.UserService;
 public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserMapper userMapper;
+	
 	public User findUser(String uid) throws Exception{
-		return userMapper.findUser(uid);
+		return userMapper.selectByPrimaryKey(uid);
+	}
+	public int insertSelective(User record) throws Exception{
+		return userMapper.insertSelective(record);
 	}
 }

@@ -1,9 +1,22 @@
 @CHARSET "UTF-8";
+:root{
+	--num-1:10%;
+	--num-2:20%;
+	--num-3:30%;
+}
 body{
 	background-color:#ffffff;
 }
 ul,li{
 	list-style: none;
+}
+
+.myText{
+	margin-top:2px;
+}
+.myDivli{
+	height:30x;
+	margin-top:10px;
 }
 .nav{
 	width:100%;	
@@ -32,14 +45,13 @@ li:hover{
 }
 #Right{
 	position:fixed;
-	z-index:-1;
+	z-index:1;
 	background-color:white;
 	right:0;
 	top:50px;
 	width:200px;
 }
 #Right .nav li{
-	display:none;
 	border:1px #c0c0c0 solid;
 	animation:liMove 1s;
 	animation-fill-mode: forwards;
@@ -94,4 +106,15 @@ li:hover{
 	width:90px;
 	height:50px;
 	padding-top:12px;
+}
+/**socket窗口**/
+#returnMessage {
+	text-align:left;
+	width: 95%;
+	height: 250px;
+	box-shadow: -1px -1px 1px;
+	border: 1px #c0c0c0 solid;
+	overflow-y: auto;
+	padding-left: 10px;
+	margin: 0 auto;
 }

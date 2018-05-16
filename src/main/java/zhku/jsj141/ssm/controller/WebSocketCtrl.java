@@ -36,11 +36,6 @@ public class WebSocketCtrl implements WebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("链接成功......");
         users.add(session);
-        /*if(uid!= null){
-            //查询未读消息
-            int count = 5;
-            session.sendMessage(new TextMessage(count + ""));
-        }*/
         session.sendMessage(new TextMessage("欢迎使用聊天平台(测试中)~~"));
     }
 
@@ -63,7 +58,7 @@ public class WebSocketCtrl implements WebSocketHandler{
              map.put("message", message);
              mess = "<span style=\"color:red;\">"+from+"</span>对你说: "+message;
              sendMessageToUser(to,new TextMessage(mess));
-             mess = "你对<span style=\"color:red;\">"+from+"</span>说: "+message;
+             mess = "你对<span style=\"color:red;\">"+to+"</span>说: "+message;
              sendMessageToUser(from,new TextMessage(mess));
         }
     }
