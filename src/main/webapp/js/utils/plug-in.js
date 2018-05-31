@@ -20,7 +20,7 @@
 		}};
 	var IType = Type ? Type instanceof Object ? Type : PopType[Type] || {} : {};	
 	var Config = $.extend(true, {
-		Title:"来自Pop插件的通知",
+		Title:"操作结果",
 		Close:true,
 		Animation:"layerFadeIn",
 		BoxBg:true,
@@ -29,11 +29,12 @@
 		ZIndex:99999,
 		Class:false,
 		Btn:{
-			yes:{vla:"我知道了",class:"btn btn-primary",ope:function(){Close()}},
+			yes:{vla:"好了好了,我都知道了",class:"btn btn-primary",ope:function(){Close()}},
 	
 		}
 		},IType);
 	var $Box=$("<div>").addClass("box").addClass(Config.Class);
+	var $BoxLogo=$("<div>").addClass("plug_Logo");
 	var $BoxTitle=$("<div>").addClass("box-title");
 	var $BoxClose=$("<i>").html("×");
 	var $BoxHtml=$("<div>").addClass("box-content");
@@ -58,7 +59,7 @@
 		if($("style[pop-animation]").length<=0){$("head").append("<style pop-animation=true>"+AnimationStyle()+"</style>");}
 		
 		$("body").append(
-			$Box.append($BoxTitle.html(Config.Title).// 标题
+			$Box.append($BoxLogo).append($BoxTitle.html(Config.Title).// 标题
 			append($BoxClose)).// 关闭按钮
 			append($BoxHtml.html(Html)). // 内容
 			append($BoxBtn.html(btn_()))).append($BoxBg);// 按钮以及事件
@@ -128,9 +129,9 @@
 	jQuery.Pro  = function(Html,Type) {
 		
 		var Config = $.extend(true, {
-		Img:false,
+		/*Img:false,*/
 		ImgWh:"100*100",
-		BoxBgopacity:0.8,
+		BoxBgopacity:0.7,
 		ZIndex:99999,
 		Time:3,
 		StartOn:false,
@@ -140,16 +141,18 @@
 		
 		$Box=$("<div>").css({
 		"user-select":"none",
-		"font-family": "Microsoft YaHei', '微软雅黑', 'Lantinghei SC', 'Open Sans', Arial, 'Hiragino Sans GB', 'STHeiti', 'WenQuanYi Micro Hei', SimSun, sans-serif",
+		"font-family":"Microsoft Ya Hei', '微软雅黑', 'Lantinghei SC', 'Open Sans', Arial, 'Hiragino Sans GB', 'STHeiti', 'WenQuanYi Micro Hei', SimSun, sans-serif",
 		"position": "fixed",
 		"display": "inline-block",
 		"left": "50%",
 		"top": "50%",
 		"max-width":"300px",
-		"background-color": "rgba(0,0,0,"+Config.BoxBgopacity+")",
+		"background-color": "rgba(255,255,255,"+Config.BoxBgopacity+")",
 		"padding": "13px 18px",
-		"color": "#fff",
+		"color": "black",
 		"border-radius":" 6px",	
+		"border":"1px #c0c0c0 solid",
+		"box-shadow":"2px 2px 2px #c0c0c0",
 		"line-height":"30px",
 		"font-size":"14px",
 		"text-align": "center",
@@ -160,16 +163,16 @@
 		"padding": "0",
 		}).html(Html);
 		
-		$BoxImg=$("<img>").attr({"src":Config.Img});
+		/*$BoxImg=$("<img>").attr({"src":Config.Img});*/
 		
 		$("body").append($Box.append($BoxHtml));
 		
-		if(Config.Img){$Box.prepend($BoxImg);}
+		/*if(Config.Img){$Box.prepend($BoxImg);}*/
 		
-		if(Config.ImgWh){
+		/*if(Config.ImgWh){
 			var i=Config.ImgWh.split("*");
 			$BoxImg.attr({"width":i[0],"height":i[1]})
-		}
+		}*/
 		$Box.css({"margin-left":-$Box.outerWidth()*0.5,"margin-top":-$Box.outerHeight()*0.5,"z-index":Config.ZIndex});
 		
 		if(Config.StartOn){Config.StartOn();}

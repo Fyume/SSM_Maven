@@ -1,8 +1,6 @@
 package zhku.jsj141.ssm.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
-
 import zhku.jsj141.ssm.po.User;
 import zhku.jsj141.ssm.service.UserService;
 import zhku.jsj141.ssm.utils.MD5Utils;
 import zhku.jsj141.ssm.utils.fileUtils;
 import zhku.jsj141.ssm.utils.mailUtils;
+import zhku.jsj141.ssm.utils.methodUtils;
 import zhku.jsj141.ssm.validation.ValidGroup1;
 
 @Controller
@@ -33,7 +30,7 @@ public class UserCtrl {
 	@Autowired
 	private HttpServletRequest request;
 	@Autowired
-	private HttpServletResponse response;
+	private methodUtils mUtils;
 	/*@RequestMapping(value="/findUser",method={RequestMethod.POST,RequestMethod.GET})
 	public String findUser(Model model) throws Exception{
 		System.out.println("--findUser--");
@@ -50,10 +47,45 @@ public class UserCtrl {
 		System.out.println(user);
 		return "index";
 	}
+	@RequestMapping(value="/ajaxUid",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String ajaxUid(){//用小型弹窗($Pro())
+		String uid = request.getParameter("uid");
+		if(uid!=null){
+			try {
+				if(userService.findUser(uid)!=null){
+					return mUtils.OneResultM("该用户ID已存在");
+				}else{
+					return mUtils.OneResultM("用户ID可用");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return mUtils.OneResultM("false");
+	}
 	@RequestMapping("/register")
 	@ResponseBody
 	public String register(User user){
-		Map<String, String> map = new HashMap<String, String>();
+		if(user.getEmail()!=null&&user.getEmail().trim()!=""){
+			user.setEmail2(user.getEmail());//激活之后再存到email字段
+			String time = String.valueOf(System.currentTimeMillis()/1000);
+			time = time.substring(time.length()-4);
+			String uid_MD5 = new MD5Utils(user.getUid()).getStr();
+			try {
+				mailUtils.sendEmail(user.getEmail(), (uid_MD5+time));
+				user.setEmail(null);
+				userService.insertSelective(user);
+				return mUtils.OneResultM("注册成功，请前往邮箱激活");
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return mUtils.OneResultM("false");
+	}
+	@RequestMapping("/activate")
+	@ResponseBody
+	public String activate(User user){
 		if(user.getEmail()!=null&&user.getEmail().trim()!=""){
 			user.setEmail2(user.getEmail());
 			String time = String.valueOf(System.currentTimeMillis()/1000);
@@ -63,15 +95,12 @@ public class UserCtrl {
 				mailUtils.sendEmail(user.getEmail(), (uid_MD5+time));
 				user.setEmail(null);
 				userService.insertSelective(user);
-				map.put("result", "true");
+				return mUtils.OneResultM("注册成功，请前往邮箱激活");
 			}catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				map.put("result", "false");
 			}
 		}
-		String str = JSON.toJSONString(map);
-		return str;
+		return mUtils.OneResultM("false");
 	}
 	@RequestMapping("/linshi")
 	public String linshi(){

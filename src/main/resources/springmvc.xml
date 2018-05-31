@@ -15,6 +15,8 @@
             http://www.springframework.org/schema/aop/spring-aop.xsd
             http://www.springframework.org/schema/websocket 
             http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+	<!-- 开启注解处理器 -->
+	<context:annotation-config/>
 	<!-- 实际开发可以开启组件扫描 -->
 	<context:component-scan base-package="zhku.jsj141.ssm"></context:component-scan>
 	<!-- 注解扫描 -->

@@ -1,5 +1,6 @@
 var li = $("#Right #Right_ul li");
 var last = $("#Right #Right_ul li:last");
+var uidRs=false;
 $(document).ready(function(){
 	$("#Right_ul").load("/SSM_Maven/html/login.html");
 	$("#returnMessage").scrollTop($("#returnMessage").height());
@@ -138,8 +139,33 @@ function visibility(){
 		$("#password").attr("type","password");
 	}
 }
-function register(){
+function ajaxUid($this){
 	$.ajax({
+		url:'/SSM_Maven/user/ajaxUid.do',
+		type:'POST',
+		data:{uid:$("#uid").val()},
+		dataType:'JSON',
+		async:false,
+		cache:false,
+		success:function(data){
+			if(data.result!="false"){
+				$.Pro(data.result);
+				if(data.result=="该用户ID已存在"){
+					uidRs=false;
+					$($this).focus();
+				}else{
+					uidRs=true;
+				}
+			}else{
+				$.Pro("发生未知错误!!");
+				$($this).css("color","white");
+			}
+		},
+	});
+}
+function register(){
+	
+	/*$.ajax({
 		url:'/SSM_Maven/user/register.do',
 		type:'POST',
 		data:$("#RegisterForm").serialize(),
@@ -148,12 +174,12 @@ function register(){
 		cache:false,
 		success:function(data){
 			if(data.result=="true"){
-				alert("注册成功，请确认查收激活邮件");
+				$.Pop('注册成功，请确认查收激活邮件');
 			}else{
-				alert("注册失败");
+				$.Pop('注册失败');
 			}
 		},
-	});
+	});*/
 }
 /*****登录*****/
 function loginOn(){

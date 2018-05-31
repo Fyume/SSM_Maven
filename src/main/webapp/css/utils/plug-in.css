@@ -52,3 +52,14 @@
 .yushe .box-title {
 	color: #fff !important;
 }
+.plug_Logo{
+	width:30px;
+	height:30px;
+	border-radius:30px;
+	border:1px #c0c0c0 solid;
+	float:left;
+	background-image: url("/SSM_Maven/img/logo/Mylogo.png");
+	background-size:30px 30px;
+	margin-top:13px;
+	margin-left:5px;
+}
