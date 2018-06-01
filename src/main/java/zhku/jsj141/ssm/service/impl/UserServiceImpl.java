@@ -14,7 +14,13 @@ public class UserServiceImpl implements UserService{
 	public User findUser(String uid) throws Exception{
 		return userMapper.selectByPrimaryKey(uid);
 	}
+	public User findUserByCode(String code) throws Exception{
+		return userMapper.selectByCode(code);
+	}
 	public int insertSelective(User record) throws Exception{
 		return userMapper.insertSelective(record);
+	}
+	public int updateSelective(User record) throws Exception{
+		return userMapper.updateByPrimaryKeySelective(record);
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import zhku.jsj141.ssm.po.Temp;
 import zhku.jsj141.ssm.po.User;
 import zhku.jsj141.ssm.service.UserService;
 import zhku.jsj141.ssm.utils.MD5Utils;
@@ -60,11 +61,12 @@ public class UserCtrl {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				return mUtils.OneResultM("false");
 			}
 		}
 		return mUtils.OneResultM("false");
 	}
-	@RequestMapping("/register")
+	@RequestMapping(value="/register",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String register(User user){
 		if(user.getEmail()!=null&&user.getEmail().trim()!=""){
@@ -75,32 +77,61 @@ public class UserCtrl {
 			try {
 				mailUtils.sendEmail(user.getEmail(), (uid_MD5+time));
 				user.setEmail(null);
+				user.setCode(uid_MD5+time);
 				userService.insertSelective(user);
 				return mUtils.OneResultM("注册成功，请前往邮箱激活");
 			}catch (Exception e) {
 				e.printStackTrace();
+				return mUtils.OneResultM("false");
 			}
 		}
 		return mUtils.OneResultM("false");
 	}
-	@RequestMapping("/activate")
+	@RequestMapping(value="/activate",produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String activate(User user){
-		if(user.getEmail()!=null&&user.getEmail().trim()!=""){
-			user.setEmail2(user.getEmail());
-			String time = String.valueOf(System.currentTimeMillis()/1000);
-			time = time.substring(time.length()-4);
-			String uid_MD5 = new MD5Utils(user.getUid()).getStr();
-			try {
-				mailUtils.sendEmail(user.getEmail(), (uid_MD5+time));
-				user.setEmail(null);
-				userService.insertSelective(user);
-				return mUtils.OneResultM("注册成功，请前往邮箱激活");
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+	public String activate(){
+		String code = request.getParameter("code");
+		Temp temp = new Temp();
+		temp.setTitle("激活结果");
+		temp.setWhere("/SSM_Maven/user/linshi.do");
+		if(code==null){
+			temp.setResult("激活码为空，你是不是打算做什么不好的事啊@_@");
+			return mUtils.OneResultO(temp);
 		}
-		return mUtils.OneResultM("false");
+		User user = null;
+		try {
+			user = userService.findUserByCode(code);
+			if(user!=null){
+				String uid_MD5 = new MD5Utils(user.getUid()).getStr();
+				if(uid_MD5.equals(code.substring(0,uid_MD5.length()))){//是同一个user，计算时间差
+					long time = Long.valueOf(code.substring(uid_MD5.length(), code.length()));
+					String now = String.valueOf(System.currentTimeMillis()/1000);
+					now = now.substring(now.length()-4);
+					long NOW = Long.valueOf(now);
+					long time_temp = NOW-time;
+					if(time_temp>0&&time_temp<600){//10分钟内
+						user.setCode("null");
+						user.setEmail(user.getEmail2());
+						user.setEmail2("null");
+						userService.updateSelective(user);
+						temp.setResult("激活成功，现已开通会员功能\\(^o^)/~");
+						return mUtils.OneResultO(temp);
+					}else{
+						temp.setResult("激活超时，请重新发送激活邮件哦(⊙ｏ⊙)~");
+						return mUtils.OneResultO(temp);
+					}
+				}
+			}else{
+				temp.setResult("没有这个用户哦，你是不是搞错啦←_←");
+				return mUtils.OneResultO(temp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			temp.setResult("报错了！报错了！o_O");
+			return mUtils.OneResultO(temp);
+		}
+		temp.setResult("激活失败了o_O");
+		return mUtils.OneResultO(temp);
 	}
 	@RequestMapping("/linshi")
 	public String linshi(){

@@ -1,6 +1,6 @@
 var li = $("#Right #Right_ul li");
 var last = $("#Right #Right_ul li:last");
-var uidRs=false;
+
 $(document).ready(function(){
 	$("#Right_ul").load("/SSM_Maven/html/login.html");
 	$("#returnMessage").scrollTop($("#returnMessage").height());
@@ -42,10 +42,11 @@ $(document).ready(function(){
 		});
 	}
 });
-function MyAjax(url,data,succF,errF){
+/*function MyAjax(url,data,succF,errF){
 	$.ajax({
 		url:url,
 		data:data,
+		type:'POST',
 		dataType:'json',
 		cache:false,
 		success:function(){
@@ -55,7 +56,7 @@ function MyAjax(url,data,succF,errF){
 			errF;
 		}
 	});
-}
+}*/
 function Reset(){
 	li = $("#Right #Right_ul li");
 	last = $("#Right #Right_ul li:last");
@@ -123,82 +124,31 @@ function TopOpen($this){
 	$("#Top").css("display","block");
 	$($this).css("display","none");
 }
-/******注册*****/
+/***注册***/
 function registerOn(){
 	$("#Right_ul").load("/SSM_Maven/html/register.html");
-}
-function visibility(){
-	var type = $("#password").attr("type");
-	if(type=='password'){
-		$("#visibility").removeClass("glyphicon-eye-close");
-		$("#visibility").addClass("glyphicon-eye-open");
-		$("#password").attr("type","text");
-	}else if(type=='text'){
-		$("#visibility").removeClass("glyphicon-eye-open");
-		$("#visibility").addClass("glyphicon-eye-close");
-		$("#password").attr("type","password");
-	}
-}
-function ajaxUid($this){
-	$.ajax({
-		url:'/SSM_Maven/user/ajaxUid.do',
-		type:'POST',
-		data:{uid:$("#uid").val()},
-		dataType:'JSON',
-		async:false,
-		cache:false,
-		success:function(data){
-			if(data.result!="false"){
-				$.Pro(data.result);
-				if(data.result=="该用户ID已存在"){
-					uidRs=false;
-					$($this).focus();
-				}else{
-					uidRs=true;
-				}
-			}else{
-				$.Pro("发生未知错误!!");
-				$($this).css("color","white");
-			}
-		},
-	});
-}
-function register(){
-	
-	/*$.ajax({
-		url:'/SSM_Maven/user/register.do',
-		type:'POST',
-		data:$("#RegisterForm").serialize(),
-		dataType:'JSON',
-		async:false,
-		cache:false,
-		success:function(data){
-			if(data.result=="true"){
-				$.Pop('注册成功，请确认查收激活邮件');
-			}else{
-				$.Pop('注册失败');
-			}
-		},
-	});*/
 }
 /*****登录*****/
 function loginOn(){
 	$("#Right_ul").load("/SSM_Maven/html/login.html");
 }
 function login(){
-	/*$.ajax({
+	$.ajax({
 		url:'/SSM_Maven/user/login.do',
 		type:'POST',
 		data:$("#LoginForm").serialize(),
 		dataType:'json',
 		async:false,
 		cache:false,
-		success:function(){
-			alert("111");
+		success:function(data){
+			$.cookie('ssm_m_user',data.message,{expires:7,path:'/'});
+			$.cookie('JSESESSIONID',data.sessionID,{expires:7,path:'/'});
 		},
-	});*/
-	$("#LoginForm").ajaxSubmit();
-	alert("111");
+	});
+	/*if($("#cookieFlag").is(':checked')){
+		
+	}*/
+	/*$("#LoginForm").ajaxSubmit();*/
 }
 
 //websocket
