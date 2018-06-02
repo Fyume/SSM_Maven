@@ -7,11 +7,11 @@
 		</div>
 		<div class="input-group myDivli col-lg-12">
 			<span class="glyphicon glyphicon-user input-group-addon col-2 margin-left-1"></span>
-			<input type="text" placeholder="用户ID" name="uid" class="col-9 myText">
+			<input type="text" id="uid" placeholder="用户ID" name="uid" class="col-9 myText" onchange="check(this)">
 		</div>
 		<div class="input-group myDivli col-lg-12">
 			<span class="glyphicon glyphicon-lock input-group-addon col-2"></span>
-			<input type="text" placeholder="密码" name="password" class="col-9 myText">
+			<input type="password" id="password" placeholder="密码" name="password" class="col-9 myText" onchange="check(this)">
 		</div>
 		<div class="input-group myDivli col-lg-12" style="height:26px;margin-left:5px;">
 			<div id="slide_box">
@@ -25,10 +25,11 @@
 		</div>
 		<div class="col-lg-12 text-right" style="height:32px;margin-top:5px;">
 			<input class="btn btn-info disabled" disabled="disabled" id="btn_login" style="margin:0 auto;height:25px;padding-top:2px;" type="button" onclick="login()" value="登录">
-			<input type="checkbox" name="cookieFlag" id="cookieFlag" value="1" onchange="login()">记住我
+			<input type="checkbox" name="cookieFlag" id="cookieFlag" value="1" onchange="login()" checked>记住我
 		</div>
-		<div class="col-lg-12 text-right" style="margin-left:10px;">
-			<span class="myA" onclick="registerOn()" style="font-size:12px;">前往注册>></span>
+		<div class="col-lg-12 text-left" style="margin-left:10px;">
+			<span class="myA pull-left" style="margin-left:-10px;height:25px;padding-top:2px;font-size:12px;" onclick="loginOn()">重置</span>
+			<span class="myA pull-right" onclick="registerOn()" style="font-size:12px;">前往注册>></span>
 		</div>
 	</form>
 </li>

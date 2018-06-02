@@ -1,7 +1,10 @@
 package zhku.jsj141.ssm.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,13 +43,55 @@ public class UserCtrl {
 		model.addAttribute("test", "model");
 		return "test";
 	}*/
-	@RequestMapping("/login")
+	@RequestMapping(value="/login",produces="text/html;charset=UTF-8")
+	@ResponseBody
 	public String login(User user,String cookieFlag){
-		if(cookieFlag==null){
-			
+		Temp t = new Temp();
+		Map<String,String> map = new HashMap<String,String>();
+		Map<String,Object> map2 = new HashMap<String,Object>();
+		String UID = null;
+		String MD5_p = null;
+		t.setResult("false");
+		Cookie cookies[] = request.getCookies();
+		if(cookies!=null){//有 则取cookie
+			for (Cookie cookie : cookies) {
+				if(cookie.getName().equals("ssm_m_user")){
+					if(cookie.getValue()!=""&&cookie.getValue()!="null"){
+						String info = cookie.getValue();
+						int n = info.indexOf(".");
+						if(n!=-1){
+							UID = info.substring(0,n);//cookie的
+							MD5_p = info.substring(n+1,info.length());
+						}
+					}
+				}
+			}
 		}
-		System.out.println(user);
-		return "index";
+		if(UID==null||MD5_p==null){
+			UID = user.getUid();
+			MD5_p = new MD5Utils(user.getPassword()).getStr();
+		}
+		try {
+			User user_sql = userService.findUser(UID);
+			if(user_sql!=null){
+				if(user_sql.getPassword().equals(MD5_p)){
+					request.getSession().setAttribute("user", user_sql);
+					map2.put("userinfo",user_sql);
+					if(cookieFlag!=null){
+						map.put("JSESESSIONID", request.getSession().getId());
+						String ssm_m_user = user_sql.getUid()+"."+user_sql.getPassword();
+						map.put("ssm_m_user",ssm_m_user);
+						map2.put("cookies",map);
+					}
+					t.setResult("true");
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t.setData(map2);
+		return mUtils.OneResultO(t);
 	}
 	@RequestMapping(value="/ajaxUid",produces="text/html;charset=UTF-8")
 	@ResponseBody
@@ -55,16 +100,16 @@ public class UserCtrl {
 		if(uid!=null){
 			try {
 				if(userService.findUser(uid)!=null){
-					return mUtils.OneResultM("该用户ID已存在");
+					return mUtils.OneResultM("该用户ID已存在Σ( ° △ °|||)︴");
 				}else{
-					return mUtils.OneResultM("用户ID可用");
+					return mUtils.OneResultM("用户ID可用φ(゜▽゜*)♪");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				return mUtils.OneResultM("false");
+				return mUtils.OneResultM("出错了ヽ(°◇° )ノ");
 			}
 		}
-		return mUtils.OneResultM("false");
+		return mUtils.OneResultM("用户ID为空o_O");
 	}
 	@RequestMapping(value="/register",produces="text/html;charset=UTF-8")
 	@ResponseBody
@@ -76,6 +121,7 @@ public class UserCtrl {
 			String uid_MD5 = new MD5Utils(user.getUid()).getStr();
 			try {
 				mailUtils.sendEmail(user.getEmail(), (uid_MD5+time));
+				user.setPassword(new MD5Utils(user.getPassword()).getStr());
 				user.setEmail(null);
 				user.setCode(uid_MD5+time);
 				userService.insertSelective(user);

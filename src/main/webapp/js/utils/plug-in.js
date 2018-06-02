@@ -147,7 +147,7 @@
 		"left": "50%",
 		"top": "50%",
 		"max-width":"300px",
-		"background-color": "rgba(255,255,255,"+Config.BoxBgopacity+")",
+		"background-color": "rgba(255,255,200,"+Config.BoxBgopacity+")",
 		"padding": "13px 18px",
 		"color": "black",
 		"border-radius":" 6px",	

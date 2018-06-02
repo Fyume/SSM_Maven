@@ -129,10 +129,35 @@ function registerOn(){
 	$("#Right_ul").load("/SSM_Maven/html/register.html");
 }
 /*****登录*****/
+var arr = [0,0];
 function loginOn(){
 	$("#Right_ul").load("/SSM_Maven/html/login.html");
 }
+function check($this){
+	debugger
+	var E = /[a-zA-Z0-9_]{4,}/;
+	var id = $($this).attr("id");
+	if(E.test($($this).val())){
+		if(id=="uid"){
+			arr[0]=1;
+		}else if(id=="password"){
+			arr[1]=1;
+		}
+	}else{
+		if(id=="uid"){
+			arr[0]=0;
+		}else if(id=="password"){
+			arr[1]=0;
+		}
+	}
+	if(arr[0]+arr[1]==2){
+		validateOn();
+	}else{
+		validateOff();
+	}
+}
 function login(){
+	var cookie = $("#cookieFlag").is(':checked');
 	$.ajax({
 		url:'/SSM_Maven/user/login.do',
 		type:'POST',
@@ -141,11 +166,26 @@ function login(){
 		async:false,
 		cache:false,
 		success:function(data){
-			$.cookie('ssm_m_user',data.message,{expires:7,path:'/'});
-			$.cookie('JSESESSIONID',data.sessionID,{expires:7,path:'/'});
+			if(data.result!="false"){
+				$("#Right_ul").load("/SSM_Maven/html/index_user.html");
+				$("#uid").html(data.data.userinfo.uid);
+				if(data.data.userinfo.email=="null"){
+					$("#email").html(data.data.userinfo.email2+"(没激活)");
+				}else{
+					$("#email").html(data.data.userinfo.email);
+				}
+				debugger
+				if(cookie){
+					$.cookie('userinfo',data.data.userinfo,{expires:7,path:'/'});
+					$.cookie('ssm_m_user',data.data.cookies.ssm_m_user,{expires:7,path:'/'});
+					$.cookie('JSESESSIONID',data.data.cookies.JSESESSIONID,{expires:7,path:'/'});
+				}
+			}else{
+				$.Pro('登录失败ヾ(ﾟ∀ﾟゞ)');
+			}
 		},
 	});
-	/*if($("#cookieFlag").is(':checked')){
+	/*if(){
 		
 	}*/
 	/*$("#LoginForm").ajaxSubmit();*/
