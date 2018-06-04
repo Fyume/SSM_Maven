@@ -1,7 +1,12 @@
 <meta charset="UTF-8">
-<li style="height:200px;cursor:default;">
-	<span title="登出" class="glyphicon glyphicon-log-out" style="float:right;font-size:18px;"></span>
-	<img class="col-lg-8" style="border-radius:131px;margin-top:10px;margin-left:35px;" alt="头像" title="头像" src="/SSM_Maven/img/user/img-default.jpg">
+<style>
+#li:hover{
+	color:black;
+}
+</style>
+<li id="li" style="height:200px;cursor:default;">
+	<span title="登出" class="glyphicon glyphicon-log-out" style="float:right;font-size:18px;" onclick="StorClear()"></span>
+	<img class="col-lg-8" style="border-radius:131px;margin-top:10px;margin-left:35px;" id="image" alt="头像" title="头像" src="/SSM_Maven/img/user/img-default.jpg">
 	<div class="col-lg-12" title="Fyume">
 		<span id="uid">Fyume</span>
 	</div>
@@ -19,3 +24,4 @@
 <li><a>消息</a></li>
 <li><a>收藏夹</a></li>
 <li><a>个人中心</a></li>
+<script type="text/javascript" src="/SSM_Maven/js/user/userinfo.js"></script>

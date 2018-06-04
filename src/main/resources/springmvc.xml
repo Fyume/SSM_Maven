@@ -37,13 +37,13 @@
 			<value>5242880</value>
 		</property>
 	</bean>
-	<!-- <mvc:default-servlet-handler /> 
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
-			<bean class="zhku.jsj141.ssm.intercepter.MyHandshakeInterceptor"/>
+			<mvc:exclude-mapping path="/user/*"/>
+			<bean class="zhku.jsj141.ssm.intercepter.PermissionIntercepter"/>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 	<!-- <websocket:handlers>  
 		<websocket:mapping path="/webSocket.do" handler="webSocket"/>  
 		<websocket:handshake-interceptors>  

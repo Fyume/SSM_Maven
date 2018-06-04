@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import redis.clients.jedis.Jedis;
 import zhku.jsj141.ssm.po.Temp;
 import zhku.jsj141.ssm.po.User;
 import zhku.jsj141.ssm.service.UserService;
+import zhku.jsj141.ssm.utils.JedisUtils;
 import zhku.jsj141.ssm.utils.MD5Utils;
 import zhku.jsj141.ssm.utils.fileUtils;
 import zhku.jsj141.ssm.utils.mailUtils;
@@ -35,6 +36,8 @@ public class UserCtrl {
 	private HttpServletRequest request;
 	@Autowired
 	private methodUtils mUtils;
+	@Autowired
+	private JedisUtils jUtils;
 	/*@RequestMapping(value="/findUser",method={RequestMethod.POST,RequestMethod.GET})
 	public String findUser(Model model) throws Exception{
 		System.out.println("--findUser--");
@@ -47,51 +50,53 @@ public class UserCtrl {
 	@ResponseBody
 	public String login(User user,String cookieFlag){
 		Temp t = new Temp();
-		Map<String,String> map = new HashMap<String,String>();
 		Map<String,Object> map2 = new HashMap<String,Object>();
-		String UID = null;
-		String MD5_p = null;
+		Map<String,String> map = new HashMap<String,String>();
 		t.setResult("false");
+		String UID = user.getUid();
+		String MD5_p = new MD5Utils(user.getPassword()).getStr();
+		try {
+			User user_sql = userService.findUser(UID);
+			if(user_sql!=null){
+				if(user_sql.getPassword().equals(MD5_p)){
+					map2.put("userinfo",user_sql);
+					if(cookieFlag!=null){
+						map.put("useCookie","true");
+						String now = String.valueOf(System.currentTimeMillis());
+						String token = new MD5Utils(user.getUid()).getStr()+now.substring(now.length()-4);
+						Jedis jedis = jUtils.getJedis();
+						jedis.setex(token,3600*24*7,user_sql.getUid());//加入新token
+						map.put("ssm_m_user",token);//返回浏览器token
+					}
+					map2.put("cookies",map);
+					t.setResult("true");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		t.setData(map2);
+		return mUtils.OneResultO(t);
+	}
+	@RequestMapping(value="/logOut",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String logOut(){//清redis 没了
 		Cookie cookies[] = request.getCookies();
 		if(cookies!=null){//有 则取cookie
 			for (Cookie cookie : cookies) {
 				if(cookie.getName().equals("ssm_m_user")){
-					if(cookie.getValue()!=""&&cookie.getValue()!="null"){
-						String info = cookie.getValue();
-						int n = info.indexOf(".");
-						if(n!=-1){
-							UID = info.substring(0,n);//cookie的
-							MD5_p = info.substring(n+1,info.length());
+					if(cookie.getValue()!=""||cookie.getValue()!="null"){
+						JedisUtils jUtils = new JedisUtils();
+						Jedis jedis = jUtils.getJedis();
+						String uid = jedis.get(cookie.getValue());//查找redis有没有这个token
+						if(uid!=null){//有
+							jedis.del(cookie.getValue());
 						}
 					}
 				}
 			}
 		}
-		if(UID==null||MD5_p==null){
-			UID = user.getUid();
-			MD5_p = new MD5Utils(user.getPassword()).getStr();
-		}
-		try {
-			User user_sql = userService.findUser(UID);
-			if(user_sql!=null){
-				if(user_sql.getPassword().equals(MD5_p)){
-					request.getSession().setAttribute("user", user_sql);
-					map2.put("userinfo",user_sql);
-					if(cookieFlag!=null){
-						map.put("JSESESSIONID", request.getSession().getId());
-						String ssm_m_user = user_sql.getUid()+"."+user_sql.getPassword();
-						map.put("ssm_m_user",ssm_m_user);
-						map2.put("cookies",map);
-					}
-					t.setResult("true");
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		t.setData(map2);
-		return mUtils.OneResultO(t);
+		return mUtils.OneResultM("true");
 	}
 	@RequestMapping(value="/ajaxUid",produces="text/html;charset=UTF-8")
 	@ResponseBody

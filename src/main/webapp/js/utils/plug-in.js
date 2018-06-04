@@ -6,13 +6,13 @@
 	var BoxId=id_();
 	var PopType={
 		alert: {
-			Title: "提示",
+			Title: "提示 ⊙▽⊙",
 			Btn:{
 			yes:{vla:"我知道了",ope:function(){if(Callback){Callback();Close()}else{Close()}}}
 		}
 			},
 		confirm:{
-			Title: "注意",
+			Title: "温馨提示ヾ(ﾟ∀ﾟゞ)",
 			Btn:{
 			yes:{vla:"确定",ope:function(){if(Callback){Callback();Close()}else{Close()}}},
 			no:{vla:"取消",class:"btn btn-currency",ope:function(){Close()}}
