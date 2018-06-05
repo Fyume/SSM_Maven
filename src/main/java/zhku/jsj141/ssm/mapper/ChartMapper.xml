@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zhku.jsj141.ssm.mapper.ChartMapper">
+  <resultMap id="BaseResultMap" type="zhku.jsj141.ssm.po.Chart">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="from" jdbcType="VARCHAR" property="from" />
+    <result column="to" jdbcType="VARCHAR" property="to" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, from, to, message, time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_chart
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_chart
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zhku.jsj141.ssm.po.Chart">
+  	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  		select last_insert_id()
+  	</selectKey>
+    insert into t_chart (from, to, 
+      message, time)
+    values (#{from,jdbcType=VARCHAR}, #{to,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="zhku.jsj141.ssm.po.Chart" >
+  	<selectKey keyProperty="ID" order="AFTER" resultType="java.lang.Integer">
+  		select last_insert_id()
+  	</selectKey>
+    insert into t_chart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="from != null">
+        from,
+      </if>
+      <if test="to != null">
+        to,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="from != null">
+        #{from,jdbcType=VARCHAR},
+      </if>
+      <if test="to != null">
+        #{to,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zhku.jsj141.ssm.po.Chart">
+    update t_chart
+    <set>
+      <if test="from != null">
+        from = #{from,jdbcType=VARCHAR},
+      </if>
+      <if test="to != null">
+        to = #{to,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhku.jsj141.ssm.po.Chart">
+    update t_chart
+    set from = #{from,jdbcType=VARCHAR},
+      to = #{to,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      time = #{time,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -32,6 +32,8 @@
 
 **开发记录＆收获**
 
+### **1.websocket**
+
 哇 果然是个坑，连找个可以实现的模版都找半天。先贴个地址：
 
 https://blog.csdn.net/qq_28988969/article/details/76057789
@@ -44,11 +46,11 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 
 反正我理解的大致流程就是：
 
-> **1.jar包添加**
+> **step1.jar包添加**
 >
 > spring-websocket,spring-messaging
 >
-> **2.握手拦截器类**
+> **step2.握手拦截器类**
 >
 > （这个拦截器我好像还没用到，毕竟websocketSession和http那个是不同的）
 >
@@ -68,7 +70,7 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	  }  
 > 	} 
 > ```
-> **3.url映射配置类**
+> **step3.url映射配置类**
 > ```java
 > 	@Configuration
 > 	@EnableWebSocket
@@ -84,7 +86,7 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	    }
 > 	}
 > ```
-> **4.处理器（ctrl）**
+> **step4.处理器（ctrl）**
 > ```java
 > 	public class WebSocketCtrl implements WebSocketHandler{
 > 	    private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();
@@ -175,7 +177,7 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	  }
 > 	}
 > ```
-> **5.前端js**
+> **step5.前端js**
 > ```javaScript
 > 	function getCon(){//创建连接并配置各个状态的回调
 > 	if (typeof WebSocket != 'undefined') {
@@ -245,5 +247,16 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 
 才想起来java反编译软件。。都不用下载sources文件了（我用的是luyten）
 
+### **2.前后端分离**
 
+#### 2.1登录模块的实现
 
+今天（18-6-4）回来打码，突然发现前后端分离之后，数据的处理就不一样了，我。。。
+
+关于登录模块，我最后纠结出来的方案就是:
+
+登录->后台验证成功->生成token存放redis并返回该token以及用户信息->前端将token存放到cookie，userinfo放localStorage。
+
+进入网页->localStorage有数据->加载用户信息页面
+
+​               └->无数据->加载登录页面

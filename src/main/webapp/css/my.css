@@ -245,3 +245,23 @@
 .myA:hover {
 	color: #0080c0;
 }
+.defaultUl li{
+	cursor:default;
+}
+.defaultUl li:hover{
+	color:black;
+}
+.myTitle{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.myBtn:hover{
+	background-color: #e1e1e1;
+}
+.myBg{
+	background-color:#c8ffe3;
+}
+.whiteBg{
+	background-color:#ffffff;
+}

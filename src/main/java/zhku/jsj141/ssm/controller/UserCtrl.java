@@ -3,6 +3,7 @@ package zhku.jsj141.ssm.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +66,15 @@ public class UserCtrl {
 						String now = String.valueOf(System.currentTimeMillis());
 						String token = new MD5Utils(user.getUid()).getStr()+now.substring(now.length()-4);
 						Jedis jedis = jUtils.getJedis();
-						jedis.setex(token,3600*24*7,user_sql.getUid());//加入新token
+						//先看下redis有没有 ,有则删除
+						Set<String> keys = jedis.keys(new MD5Utils(UID).getStr()+"*");
+						for (String string : keys) {
+							if(jedis.get(string).equals(UID)){
+								jedis.del(string);
+								System.out.println("deleteOK!");
+							}
+						}
+						jedis.setex(token,3600*24*7,UID);//加入新token
 						map.put("ssm_m_user",token);//返回浏览器token
 					}
 					map2.put("cookies",map);

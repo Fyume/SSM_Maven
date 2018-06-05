@@ -1,14 +1,16 @@
 $(document).ready(function(){
 	var s = JSON.parse(localStorage.getItem("userinfo"));
-	debugger
 	$("#uid").html(s.uid);
+	$("#uid").parent().attr("title",s.uid);
 	if(s.email=="null"){
 		$("#email").html(s.email2+"(没激活)");
+		$("#email").parent().attr("title",s.email2);
 	}else{
 		$("#email").html(s.email);
+		$("#email").parent().attr("title",s.email);
 	}
-	if(s.image!="null"){
-		$("#image").src("/SSM_Maven"+s.image);
+	if(s.image!="null"&&s.image!=null){
+		$("#image").attr("src","/SSM_Maven"+s.image);
 	}
 });
 function StorClear(){
@@ -25,4 +27,7 @@ function StorClear(){
 			},
 		});
 	});
+}
+function MyF(){
+	$("#Bottom").load("/SSM_Maven/html/MyFriend.html");
 }

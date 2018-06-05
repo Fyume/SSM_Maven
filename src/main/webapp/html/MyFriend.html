@@ -1,0 +1,31 @@
+<meta charset="UTF-8">
+<div class="col-lg-12" style="height:50px;"></div>
+<ul class="col-lg-10 defaultUl" style="height:500px" id="chartBox">
+	<li class="col-lg-2 row-10" style="border:1px #c0c0c0 solid;">
+		<ul class="col-lg-12 defaultUl">
+			<li class="text-left myBtn whiteBg" style="width:100%;height:60px;border:1px #c0c0c0 solid;" onclick="setTo(this)" title="123123123123132">
+				<img style="width:50px;height:50px;border-radius:50px;border:1px #c0c0c0 solid;" title="好友头像" src="/SSM_Maven/img/user/img-default.jpg"/>
+				<div class="myTitle pull-right" style="width:70px;height:100%;padding-top:20px;font-size:17px;" title="123123123123132">
+					123123123123132
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="col-lg-9 row-10" style="border:1px #c0c0c0 solid;">
+		<div class="col-lg-12 row-10 pull-left" style="border-left:2px #c0c0c0 solid;padding:0;">
+			<span class="glyphicon glyphicon-move" id="move" style="cursor:move;font-size:20px;"></span>
+			<!-- <div style="width:300px;height:30px;margin:0 auto;text-align:center;">
+				<input id="btn_Con2" class="btn btn-info row-10 disabled" style="width:100px;padding-top:3px;" type="button" value="断开连接" onclick="closeCon()">
+			</div> -->
+			<div class="row-10" style="width:100%;">
+				<div id="returnMessage" class="whiteBg"></div>
+				<div class="col-lg-12 row-2" style="margin-top:10px;padding-left:20px;">
+					<input class="col-lg-1 row-10 hidden" id="toID" type="text" placeholder="连接对象ID">
+					<textarea class="col-lg-10 row-10" id="message" placeholder="输入消息"></textarea>
+					<input class="btn btn-info row-10" style="width:100px;border-top-left-radius:0;border-bottom-left-radius:0;" type="button" value="发送" onclick="send()">
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<script type="text/javascript" src="/SSM_Maven/js/user/webSocket.js"></script>

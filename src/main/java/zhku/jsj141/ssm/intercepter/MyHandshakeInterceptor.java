@@ -9,7 +9,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
-
+//暂时没用
 public class MyHandshakeInterceptor implements HandshakeInterceptor{
 
 	public void afterHandshake(ServerHttpRequest request,  
@@ -22,8 +22,6 @@ public class MyHandshakeInterceptor implements HandshakeInterceptor{
             ServerHttpResponse response, WebSocketHandler wsHandler,  
             Map<String, Object> attributes) throws Exception {
 		HttpServletRequest  req = ((ServletServerHttpRequest)request).getServletRequest();
-		String uid = req.getParameter("uid");
-		req.getSession().setAttribute("uid", uid);
 		System.out.println("Before Handshake");  
 		return true;  
 	}

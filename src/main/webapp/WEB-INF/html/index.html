@@ -32,7 +32,7 @@
 	</div>
 	<!-- 内容显示部分 -->
 	<div id="Bottom" class="container">
-		<div style="width:90%;height:100px;margin:0 auto;border:2px #c0c0c0 solid;border-top:0;border-bottom-left-radius:20px;border-bottom-right-radius:20px;">
+		<div class="indexMenu whiteBg">
 			<ul>
 				<li>111</li>
 				<li>111</li>
@@ -42,21 +42,7 @@
 				<li>111</li>
 			</ul>
 		</div>
-		<div id="chartBox" class="col-lg-6 text-center" style="width:600px;height:360px;border:2px #c0c0c0 solid;padding:0;margin-left:300px;">
-			<span class="glyphicon glyphicon-move" id="move" style="cursor:move;font-size:20px;"></span>
-			<div style="width:300px;height:30px;margin:0 auto;text-align:center;">
-				<input id="btn_Con1" class="btn btn-info row-10" style="width:100px;padding-top:3px;" type="button" value="建立连接" onclick="getCon()">
-				<input id="btn_Con2" class="btn btn-info row-10 disabled" style="width:100px;padding-top:3px;" type="button" value="断开连接" onclick="closeCon()">
-			</div>
-			<div style="width:100%;height:310px;margin:0 auto;">
-				<div id="returnMessage"></div>
-				<div style="width:350px;height:30px;margin:0 auto;" class="input-group">
-					<input class="col-lg-3" id="toID" type="text" placeholder="连接对象ID">
-					<input class="col-lg-5" id="message" type="text" placeholder="输入消息">
-					<input class="btn btn-info input-group-addon" style="width:100px;border-top-left-radius:0;border-bottom-left-radius:0;" type="button" value="发送" onclick="send()">
-				</div>
-			</div>
-		</div>
+		
 	</div>
 </body>
 <script type="text/javascript" src="/SSM_Maven/js/jquery.cookie.js"></script>

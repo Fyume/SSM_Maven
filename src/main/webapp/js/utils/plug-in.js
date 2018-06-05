@@ -126,14 +126,15 @@
 	};
 	jQuery.Pro = jQuery.Pro || {};
 	
-	jQuery.Pro  = function(Html,Type) {
-		
+	jQuery.Pro  = function(Html,time,Type) {
+		time = time > 0 ? time : 3;
+		debugger
 		var Config = $.extend(true, {
 		/*Img:false,*/
 		ImgWh:"100*100",
 		BoxBgopacity:0.7,
 		ZIndex:99999,
-		Time:3,
+		Time:time,
 		StartOn:false,
 		EndOn:false,
 		Class:false,

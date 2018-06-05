@@ -40,12 +40,14 @@ public class jedisTest {
 	}
 	@Test
 	public void MD5test(){
-		Set<String> keys = jedis.keys(new MD5Utils("fyume").getStr()+"*");
+		String uid = new MD5Utils("fyume").getStr();
+		System.out.println(uid);
+		/*Set<String> keys = jedis.keys(uid+"*");
 		for (String string : keys) {
 			if(jedis.get(string).equals("fyume")){
-				/*jedis.del(string);*/
+				jedis.del(string);
 				System.out.println("deleteOK!");
 			}
-		}
+		}*/
 	}
 }
