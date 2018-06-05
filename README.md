@@ -255,7 +255,9 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 
 关于登录模块，我最后纠结出来的方案就是:
 
-登录->后台验证成功->生成token存放redis并返回该token以及用户信息->前端将token存放到cookie，userinfo放localStorage。
+redis存放有期限的key-value（7天，（MD5之后的uid+4位时间）-（uid））
+
+登录->后台验证成功(根据uid模糊查找redis看下有没有key的value和这个uid相同，有则删除，然后添加新的)->生成token存放redis并返回该token以及用户信息->前端将token存放到cookie，userinfo放localStorage。
 
 进入网页->localStorage有数据->加载用户信息页面
 
