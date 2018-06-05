@@ -128,7 +128,6 @@
 	
 	jQuery.Pro  = function(Html,time,Type) {
 		time = time > 0 ? time : 3;
-		debugger
 		var Config = $.extend(true, {
 		/*Img:false,*/
 		ImgWh:"100*100",

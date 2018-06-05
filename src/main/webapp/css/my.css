@@ -251,17 +251,23 @@
 .defaultUl li:hover{
 	color:black;
 }
+.li-default li{
+	margin-top:10px;
+}
 .myTitle{
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 }
 .myBtn:hover{
-	background-color: #e1e1e1;
+	background-color: #d0ffff;
 }
 .myBg{
-	background-color:#c8ffe3;
+	background-color:#f0f0f0;
 }
 .whiteBg{
 	background-color:#ffffff;
+}
+.MyScroll{
+	overflow-y: auto;
 }

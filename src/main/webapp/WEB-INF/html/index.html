@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>内容主页</title>
 <link rel="stylesheet" href="/SSM_Maven/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/SSM_Maven/css/utils/plug-in.css">
+<link rel="stylesheet" type="text/css"
+	href="/SSM_Maven/css/utils/plug-in.css">
 <link rel="stylesheet" type="text/css" href="/SSM_Maven/css/index.css">
 <link rel="stylesheet" type="text/css" href="/SSM_Maven/css/my.css">
 <script type="text/javascript" src="/SSM_Maven/js/jquery-3.2.1.min.js"></script>
@@ -14,35 +15,90 @@
 	<!-- 顶部 -->
 	<div id="Top">
 		<ul>
-			<li title="首页"><a href="/SSM_Maven/"><img style="width:30px;height:30px;border-radius:30px;border:1px #c0c0c0 solid;" src="/SSM_Maven/img/logo/Mylogo.png" title="练习项目"/></a></li>
+			<li title="首页"><a href="/SSM_Maven/"><img id="Logo"
+					src="/SSM_Maven/img/logo/Mylogo.png" title="返回欢迎页面" /></a></li>
 		</ul>
 		<ul class="pull-right">
-			<li id="right_btn" onclick="right_off(this)"><span class="glyphicon glyphicon-th-list" style="font-size:25px;"></span></li>
+			<li><a href="/SSM_Maven/user/linshi.do"><span class="glyphicon glyphicon-home" style="font-size: 25px;margin-right:10px;"></span></a></li>
+			<li id="right_btn" onclick="right_off(this)">
+				<span class="glyphicon glyphicon-th-list" style="font-size: 25px;"></span>
+			</li>
 		</ul>
-		<ul style="width:20px;height:30px;margin:0 auto;">
-			<li class="col-lg-12 row-12" style="margin-left:-5px;font-size: 20px;" onclick="TopClose()"><span class="glyphicon glyphicon-triangle-top"></span></li>
+		<ul style="width: 20px; height: 30px; margin: 0 auto;">
+			<li class="col-lg-12 row-12"
+				style="margin-left: -5px; font-size: 20px;" onclick="TopClose()"><span
+				class="glyphicon glyphicon-triangle-top"></span></li>
 		</ul>
 	</div>
-	<li id="topOn" onclick="TopOpen(this)"><span class="glyphicon glyphicon-triangle-bottom"></span></li>
+	<li id="topOn" onclick="TopOpen(this)"><span
+		class="glyphicon glyphicon-triangle-bottom"></span></li>
 	<!-- 右侧信息导航栏 -->
 	<div id="Right">
 		<ul id="Right_ul" class="nav navbar-nav">
-			
+
 		</ul>
 	</div>
 	<!-- 内容显示部分 -->
 	<div id="Bottom" class="container">
-		<div class="indexMenu whiteBg">
+		<div id="indexMenu" class="indexMenu whiteBg">
 			<ul>
-				<li>111</li>
-				<li>111</li>
-				<li>111</li>
-				<li>111</li>
-				<li>111</li>
-				<li>111</li>
+				<li title="动画" onclick="indexMenuScroll(this)">动画</li>
+				<li title="番剧" onclick="indexMenuScroll(this)">番剧</li>
+				<li title="音乐" onclick="indexMenuScroll(this)">音乐</li>
+				<li title="舞蹈" onclick="indexMenuScroll(this)">舞蹈</li>
+				<li title="游戏" onclick="indexMenuScroll(this)">游戏</li>
+				<li title="科技" onclick="indexMenuScroll(this)">科技</li>
+				<li title="生活" onclick="indexMenuScroll(this)">生活</li>
+				<li title="鬼畜" onclick="indexMenuScroll(this)">鬼畜</li>
+				<li title="电影" onclick="indexMenuScroll(this)">电影</li>
 			</ul>
 		</div>
-		
+		<div id="" class="col-lg-12" style="height:100px;"></div>
+		<div class="col-lg-12">
+			<ul class="col-lg-12 pull-left text-left Index-Bottom-Ul whiteBg">
+				<li style="height:227px;">
+					<div class="col-lg-12 row-10" style="border:1px #c0c0c0 solid;">
+						<div class="col-lg-5 row-10" style="padding-top:5px;">
+							<img style="height:220px;width:440px;" alt="公告" src="/image/111.jpg">
+							<div class="col-lg-11 text-right" style="height:30px;margin-top:-30px;padding-top:4px;">
+								<span class="glyphicon glyphicon-fire fire"></span>
+								<span class="glyphicon glyphicon-fire fire"></span>
+								<span class="glyphicon glyphicon-fire fire"></span>
+								<span class="glyphicon glyphicon-fire fire"></span>
+								<span style="color:white;" class="glyphicon glyphicon-fire"></span>
+							</div>
+						</div>
+						<div class="col-lg-7 row-10" style="padding-top:5px;border:1px #c0c0c0 solid;">
+							
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="col-lg-12 Index-Bottom-Li-Title" id="动画">动画</div>
+					<div class="col-lg-12" style="height: 200px;"></div>
+				</li>
+				<li>
+					<div class="col-lg-12 Index-Bottom-Li-Title" id="番剧">番剧</div>
+					<div class="col-lg-12" style="height: 200px;"></div>
+				</li>
+				<li>
+					<div class="col-lg-12 Index-Bottom-Li-Title" id="音乐">音乐</div>
+					<div class="col-lg-12" style="height: 200px;"></div>
+				</li>
+				<li><div class="col-lg-12 Index-Bottom-Li-Title" id="舞蹈">舞蹈</div>
+					<div class="col-lg-12" style="height: 200px;"></div></li>
+				<li><div class="col-lg-12 Index-Bottom-Li-Title" id="游戏">游戏</div>
+					<div class="col-lg-12" style="height: 200px;"></div></li>
+				<li><div class="col-lg-12 Index-Bottom-Li-Title" id="科技">科技</div>
+					<div class="col-lg-12" style="height: 200px;"></div></li>
+				<li><div class="col-lg-12 Index-Bottom-Li-Title" id="生活">生活</div>
+					<div class="col-lg-12" style="height: 200px;"></div></li>
+				<li><div class="col-lg-12 Index-Bottom-Li-Title" id="鬼畜">鬼畜</div>
+					<div class="col-lg-12" style="height: 200px;"></div></li>
+				<li><div class="col-lg-12 Index-Bottom-Li-Title" id="电影">电影</div>
+					<div class="col-lg-12" style="height: 200px;"></div></li>
+			</ul>
+		</div>
 	</div>
 </body>
 <script type="text/javascript" src="/SSM_Maven/js/jquery.cookie.js"></script>

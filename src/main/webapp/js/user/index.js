@@ -81,11 +81,23 @@ function TopClose(){
 function closeAll(){
 	disappear("#Top");
 	$("#topOn").css("display","block");
+	$("#indexMenu").removeClass("indexMenu");
+	$("#indexMenu").addClass("indexMenu2");
+	$("#indexMenu").next().addClass("hidden");
 }
 function TopOpen($this){
 	$("#Top").css("animation","topOpen 1s");
 	$("#Top").css("display","block");
 	$($this).css("display","none");
+	$("#indexMenu").removeClass("indexMenu2");
+	$("#indexMenu").addClass("indexMenu");
+	$("#indexMenu").next().removeClass("hidden");
+}
+function indexMenuScroll($this){
+	var id = $($this).attr("title");
+	var top = $("#"+id).offset().top;
+	debugger
+	$(document).scrollTop(top-100);
 }
 /***注册***/
 function registerOn(){

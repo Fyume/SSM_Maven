@@ -47,7 +47,7 @@ public class UserCtrl {
 		model.addAttribute("test", "model");
 		return "test";
 	}*/
-	@RequestMapping(value="/login",produces="text/html;charset=UTF-8")
+	@RequestMapping(value="/login")
 	@ResponseBody
 	public String login(User user,String cookieFlag){
 		Temp t = new Temp();

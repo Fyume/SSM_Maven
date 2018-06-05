@@ -1,16 +1,24 @@
 @CHARSET "UTF-8";
-:root{
-	--num-1:10%;
-	--num-2:20%;
-	--num-3:30%;
-}
 body{
 	background-color:#f7f7f7;
 }
 ul,li{
 	list-style: none;
 }
-
+#Logo {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	border: 1px #c0c0c0 solid;
+}
+#Logo:hover{
+	width: 40px;
+	height: 40px;
+	border-radius: 40px;
+	margin-top:-5px;
+	margin-left:-5px;
+	border: 2px #c0c0c0 solid;
+}
 .myText{
 	margin-top:2px;
 }
@@ -100,26 +108,86 @@ li:hover{
 	top:0;
 	width:100%;
 }
-#Bottom div ul{
-	padding-top:50px;
+.indexMenu {
+	position:fixed;
+	top:50px;
+	z-index:1;
+	width: 97%;
+	height: 50px;
+	margin: 0 auto;
+	border: 2px #c0c0c0 solid;
+	border-top: 0;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+.indexMenu2 {
+	position:fixed;
+	top:30px;
+	right:0;
+	z-index:1;
+	width: 90px;
+	height: 450px;
+	margin: 0 auto;
+	border: 2px #c0c0c0 solid;
+	border-radius: 20px;
+}
+.indexMenu ul{
 	border-bottom:2px red solid;
 }
-#Bottom div ul li{
+.indexMenu ul li{
 	border-left:1px #c0c0c0 dotted;
 	border-right:1px #c0c0c0 dotted;
 	float:left;
 	width:90px;
 	height:50px;
 	padding-top:12px;
+}.indexMenu ul li:hover{
+	border-bottom:2px red solid;
 }
-.indexMenu {
-	width: 90%;
-	height: 100px;
-	margin: 0 auto;
-	border: 2px #c0c0c0 solid;
-	border-top: 0;
-	border-bottom-left-radius: 20px;
-	border-bottom-right-radius: 20px;
+.indexMenu2 ul li{
+	margin-left:-40px;
+	border-bottom:1px #c0c0c0 dotted;
+	border-top:1px #c0c0c0 dotted;
+	float:left;
+	width:90px;
+	height:50px;
+	padding-top:12px;
+}
+.indexMenu2 ul li:hover{
+	background-color:#ff8c1a;
+	color:white;
+	font-weight:550;
+}
+.indexMenu2 ul li:first-child{
+	border-top-right-radius:20px;
+	border-top-left-radius:20px;
+	border-top:0;
+}
+.indexMenu2 ul li:last-child{
+	border-bottom-right-radius:20px;
+	border-bottom-left-radius:20px;
+	border-bottom:0;
+}
+.Index-Bottom-Ul li{
+	text-align:left;
+	cursor:default;
+}
+.Index-Bottom-Ul li:hover{
+	color:#000000;
+}
+.Index-Bottom-Li-Title {
+	height: 40px;
+	border-left: 5px red solid;
+	font-size: 20px;
+	font-weight: 550;
+	padding-top: 4px;
+}
+.glyphicon-fire{
+	cursor:pointer;
+}
+.fire{
+	color:white;
+	margin-right:5px;
 }
 /**socket窗口**/
 #returnMessage {
@@ -131,4 +199,18 @@ li:hover{
 	overflow-y: auto;
 	padding-left: 10px;
 	margin: 0 auto;
+}
+.MyF-UserName {
+	width: 130px;
+	height: 100%;
+	padding-top: 20px;
+	font-size: 17px;
+}
+.MyF-UserImage {
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	border: 1px #c0c0c0 solid;
+	margin-top:2px;
+	margin-left:4px;
 }

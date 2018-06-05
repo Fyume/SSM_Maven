@@ -1,5 +1,10 @@
 package test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -50,4 +55,30 @@ public class jedisTest {
 			}
 		}*/
 	}
+	/*@SuppressWarnings("resource")
+	@Test
+	public void aaa() throws IOException{
+		File file = new File("D://姓名和地址.txt");
+		InputStream is = new FileInputStream(file);
+		byte b[] = new byte[1024];
+		int a = is.read(b);
+		String str[] = new String(b,0,a).split("");
+		int count = 0;
+		for(int i = 0;i<str.length;i++){
+		if("a".equals(str[i]))count++;
+		}
+		System.out.println(count);
+	}*/
+	/*@Test
+	public void bbb() throws IOException{
+		String str = "adsfadsadfsd";
+		StringBuilder str2 = new StringBuilder();
+		char[] s = str.toCharArray();
+		for (char c : s) {
+			if(c!='a'){
+				str2.append(c);
+			}
+		}
+		System.out.println(str2);
+	}*/
 }
