@@ -94,4 +94,5 @@ function send(){
     }
     var str = JSON.stringify(json)
     websocket.send(str);
+    $("#message").val("");
 }

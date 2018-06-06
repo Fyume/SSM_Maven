@@ -35,7 +35,7 @@ $(document).ready(function(){
 			locationTo("/SSM_Maven/user/linshi.do");
 		}
 });
-/*function locationTo(where){
+function locationTo(where){
 	var NumDec = window.setInterval("numDec()", 1000);
 	window.setInterval("window.clearInterval('NumDec');redirect('"+where+"')", 3000);
 }
@@ -46,4 +46,4 @@ function numDec(){
 }
 function redirect(path){
 	window.location.replace(path);
-}*/
+}
