@@ -283,40 +283,43 @@ https://www.cnblogs.com/swugogo/p/7995391.html（其实我都是默认配置的�
 
 > ```java
 > public class GenMain {  
->     public static void main(String[] args) {  
->         List<String> warnings = new ArrayList<String>();  
->         boolean overwrite = true;  
->         String genCfg = "/generatorConfig.xml";//最主要的配置文件
->         File configFile = new File(GenMain.class.getResource(genCfg).getFile());  
->         ConfigurationParser cp = new ConfigurationParser(warnings);  
->         Configuration config = null;  
->         try {  
->             config = cp.parseConfiguration(configFile);  
->         } catch (IOException e) {  
->             e.printStackTrace();  
->         } catch (XMLParserException e) {  
->             e.printStackTrace();  
->         }  
->         DefaultShellCallback callback = new DefaultShellCallback(overwrite);  
->         MyBatisGenerator myBatisGenerator = null;  
->         try {  
->             myBatisGenerator = new MyBatisGenerator(config, callback, warnings);//主要执行方法
->             System.out.println("生成完毕！！！！");
->         } catch (InvalidConfigurationException e) {  
->             e.printStackTrace();  
->         }  
->         try {  
->             myBatisGenerator.generate(null);  
->         } catch (SQLException e) {  
->             e.printStackTrace();  
->         } catch (IOException e) {  
->             e.printStackTrace();  
->         } catch (InterruptedException e) {  
->             e.printStackTrace();  
->         }  
->     }  
+> public static void main(String[] args) {  
+> List<String> warnings = new ArrayList<String>();  
+> boolean overwrite = true;  
+> String genCfg = "/generatorConfig.xml";//最主要的配置文件
+> File configFile = new File(GenMain.class.getResource(genCfg).getFile());  
+> ConfigurationParser cp = new ConfigurationParser(warnings);  
+> Configuration config = null;  
+> try {  
+> config = cp.parseConfiguration(configFile);  
+> } catch (IOException e) {  
+> e.printStackTrace();  
+> } catch (XMLParserException e) {  
+> e.printStackTrace();  
+> }  
+> DefaultShellCallback callback = new DefaultShellCallback(overwrite);  
+> MyBatisGenerator myBatisGenerator = null;  
+> try {  
+> myBatisGenerator = new MyBatisGenerator(config, callback, warnings);//主要执行方法
+> System.out.println("生成完毕！！！！");
+> } catch (InvalidConfigurationException e) {  
+> e.printStackTrace();  
+> }  
+> try {  
+> myBatisGenerator.generate(null);  
+> } catch (SQLException e) {  
+> e.printStackTrace();  
+> } catch (IOException e) {  
+> e.printStackTrace();  
+> } catch (InterruptedException e) {  
+> e.printStackTrace();  
+> }  
+> }  
 > }  
 > ```
 
-话说一早没学mybatis的时候好像说hibernate也有逆向工程的。啊 hibernate有个好处就是可以配置hbm2ddl.auto为update就可以自动生成表（当然详细的好像是说假如没有表则创建，假如表不一样的修改，假如一样则只插入数据）
- 话说 这里吐槽一下 今天插入数据的时候一直报语法错误，我就纳闷了，明明逻辑是对的，然后找了好一阵，insert into 表名（字段，字段）values(值，值);这个有错吗？想了想，好像导出来的sql文件里面插入数据都是insert into 表名（\`字段\`,\`字段\`）values(值，值),然后试了下，发现ok了。。。查了下 原来是保留字冲突。我记得大二数据库那门课的时候也没有说过（用的sqlServer2008）算是涨姿势。
+​        话说一早没学mybatis的时候好像说hibernate也有逆向工程的。啊 hibernate有个好处就是可以配置hbm2ddl.auto为update就可以自动生成表（当然详细的好像是说假如没有表则创建，假如表不一样的修改，假如一样则只插入数据）
+
+​        这里吐槽一下 今天插入数据的时候一直报语法错误，我就纳闷了，明明逻辑是对的，然后找了好一阵，insert into 表名（字段，字段）values(值，值);这个有错吗？想了想，好像导出来的sql文件里面插入数据都是insert into 表名（\`字段\`,\`字段\`）values(值，值),然后试了下，发现ok了。。。查了下 原来是保留字冲突。我记得大二数据库那门课的时候也没有说过（用的sqlServer2008）算是涨姿势。
+
+eclipse的git插件好像又跪了。。好吧 gitbash无敌
