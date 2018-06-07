@@ -1,0 +1,16 @@
+.ChartImg {
+	width: 40px;
+	height: 40px;
+	border-radius: 40px;
+	border: 1px #c0c0c0 solid;
+	margin-top: -15px;
+}
+
+.ChartBox {
+	border: 1px #c0c0c0 solid;
+	padding:5px;
+	margin-left: 50px;
+	box-shadow: 3px 3px 3px #c0c0c0;
+	word-break: break-all;
+	white-space: pre-wrap;
+}

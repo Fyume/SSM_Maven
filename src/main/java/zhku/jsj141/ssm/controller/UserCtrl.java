@@ -63,9 +63,9 @@ public class UserCtrl {
 					map2.put("userinfo",user_sql);
 					if(cookieFlag!=null){
 						map.put("useCookie","true");
+						Jedis jedis = jUtils.getJedis();
 						String now = String.valueOf(System.currentTimeMillis());
 						String token = new MD5Utils(user.getUid()).getStr()+now.substring(now.length()-4);
-						Jedis jedis = jUtils.getJedis();
 						//先看下redis有没有 ,有则删除
 						Set<String> keys = jedis.keys(new MD5Utils(UID).getStr()+"*");
 						for (String string : keys) {

@@ -1,12 +1,16 @@
 package zhku.jsj141.ssm.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Controller;
@@ -18,49 +22,74 @@ import org.springframework.web.socket.WebSocketSession;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import redis.clients.jedis.Jedis;
+import zhku.jsj141.ssm.po.Chart;
+import zhku.jsj141.ssm.service.ChartService;
+import zhku.jsj141.ssm.service.UserService;
+import zhku.jsj141.ssm.utils.JedisUtils;
+import zhku.jsj141.ssm.utils.MD5Utils;
+
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 
 @Controller("webSocket")
 @RequestMapping("/webSocket")
 public class WebSocketCtrl implements WebSocketHandler{
-
+	private static final JedisUtils JUtils = new JedisUtils();
+	private static final Jedis jedis = JUtils.getJedis();
     private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();
-
-	public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
-        System.out.println("链接关闭......" + closeStatus.toString());
-        //这里可以结合redis操作登录表
-        users.remove(webSocketSession);
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ChartService chartService;
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+        System.out.println("连接关闭......" + closeStatus.toString());
+        //这里可以结合redis操作连接记录表
+        Map<String, Object> map = session.getAttributes();
+        String uid = (String) map.get("uid");
+        jedis.hdel("ssm_m_socket", uid);
+        users.remove(session);
     }
 
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("链接成功......");
-        users.add(session);
-        session.sendMessage(new TextMessage("欢迎使用聊天平台(测试中)~~"));
+	public void afterConnectionEstablished(WebSocketSession session) throws IOException {
+		System.out.println("连接成功......");
+		users.add(session);
+       /* session.sendMessage(new TextMessage("欢迎使用聊天平台(测试中)~~"));*/
     }
 
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> webSocketMessage) throws Exception {
-        String mess =  (String) webSocketMessage.getPayload();
-        /*HttpServletRequest  req = ((ServletServerHttpRequest)request).getServletRequest();
-        String uid = (String) req.getSession().getAttribute("uid");*/
         Map<String, Object> map = session.getAttributes();
+        Map<String, String> messMap = new HashMap<String, String>();
         String jsonStr = (String) webSocketMessage.getPayload();
         JSONObject json = JSONObject.parseObject(jsonStr);
         if(json.get("uid")!=null){
-        	 String uid = (String)json.get("uid");
-        	 map.put("uid", uid);
+        	String uid = (String)json.get("uid");
+        	if(userService.findUser(uid)!=null){
+        		map.put("uid", uid);
+        		Map<String, String> loginMap = jedis.hgetAll("ssm_m_socket");
+    			loginMap.put(uid, String.valueOf(System.currentTimeMillis()));
+    			jedis.hmset("ssm_m_socket", loginMap);
+        	}
         }else{
-        	 String from = (String) json.get("from");//
-             String to = (String) json.get("to");
-             String message = (String) json.get("message");
-             map.put("from", from);
-             map.put("to", to);
-             map.put("message", message);
-             mess = "<span style=\"color:red;\">"+from+"</span>对你说: "+message;
-             sendMessageToUser(to,new TextMessage(mess));
-             mess = "你对<span style=\"color:red;\">"+to+"</span>说: "+message;
-             sendMessageToUser(from,new TextMessage(mess));
-        }
+        	String from = (String) json.get("from");
+            String to = (String) json.get("to");
+            if(!from.equals(to)){
+            	String message = (String) json.get("message");
+                long time = System.currentTimeMillis();
+            	Chart chart = new Chart(from, to, message, time);
+        		chartService.insert(chart);
+        		//记得换成json格式
+        		messMap.put("from", from);
+        		messMap.put("message", message);
+        		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        		messMap.put("time",format.format(time).toString() );
+        		/*mess = "<span style=\"color:red;\">"+from+"</span>对你说: "+message;*/
+        		sendMessageToUser(to,new TextMessage(JSON.toJSONString(messMap)));
+        		messMap.put("from", null);
+        		/*mess = "你对<span style=\"color:red;\">"+to+"</span>说: "+message;*/
+        		sendMessageToUser(from,new TextMessage(JSON.toJSONString(messMap)));
+            }
+       }
     }
 
 
@@ -68,7 +97,7 @@ public class WebSocketCtrl implements WebSocketHandler{
         if(webSocketSession.isOpen()){
             webSocketSession.close();
         }
-        System.out.println("链接出错，关闭链接......");
+        System.out.println("连接出错，关闭连接......");
         users.remove(webSocketSession);
     }
 

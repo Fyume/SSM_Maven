@@ -54,4 +54,13 @@ public class Chart implements Serializable {
     public void setTime(Long time) {
         this.time = time;
     }
+
+	public Chart(String from, String to, String message, Long time) {
+		super();
+		this.from = from;
+		this.to = to;
+		this.message = message;
+		this.time = time;
+	}
+    
 }

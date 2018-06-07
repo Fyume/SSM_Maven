@@ -30,7 +30,7 @@
 
 ------
 
-**开发记录＆收获**
+**开发记录＆收获、心得**
 
 ### **1.websocket**
 
@@ -142,7 +142,6 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	   *
 > 	   * @param message
 > 	   */
-> 	  @RequestMapping("/sendMessToAll")
 > 	  public void sendMessageToUsers(TextMessage message) {
 > 	      for (WebSocketSession user : users) {
 > 	          try {
@@ -160,7 +159,6 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 > 	   * @param userName
 > 	   * @param message
 > 	   */
-> 	  @RequestMapping("/sendMessToOne")
 > 	  public void sendMessageToUser(String uid, TextMessage message) {
 > 	      for (WebSocketSession user : users) {
 > 	          if (user.getAttributes().get("uid").equals(uid)) {
@@ -256,9 +254,69 @@ https://blog.csdn.net/dong_19890208/article/details/53741927
 关于登录模块，我最后纠结出来的方案就是:
 
 redis存放有期限的key-value（7天，（MD5之后的uid+4位时间）-（uid））
+(顺便说一下 redis好像只有setex没有hmsetex之类的。所以结果就是我懒得在hashmap插入时间之后又要根据时间间隔操作键值对；而是直接setex设置一个有期限的 键-值 不放集合里。（毕竟我存放的是（token-uid），已知token组成，用keys模糊匹配出来，再比对一下value(也就是uid)是否一致便可以确定是不是该用户的token了，也可以对其增删改了）)
 
 登录->后台验证成功(根据uid模糊查找redis看下有没有key的value和这个uid相同，有则删除，然后添加新的)->生成token存放redis并返回该token以及用户信息->前端将token存放到cookie，userinfo放localStorage。
 
 进入网页->localStorage有数据->加载用户信息页面
 
 ​               └->无数据->加载登录页面
+除了部分访问放行，其他都要经过PermissionIntercepter->取cookie中的token
+
+->假如redis里面有->放行
+└->无->重定向到Temp.html并带了个参clr（通知前端清除cookie中的token）
+
+### 3.mybatis逆向工程
+
+忘记记录一下了，忘了是从哪个github上面弄得mybatis-generate了（在此对这位大神说声抱歉）
+反正在网上也有模版下载
+其他参考过的教程地址：
+
+https://blog.csdn.net/abcd898989/article/details/51316612
+1.配置需要的jar包
+2.generatorConfig.xml配置（也有模版（当然，连接数据库那部分自己改一下，或者加载一个db.properties））
+这里给个详细的解说链接：
+
+https://www.cnblogs.com/swugogo/p/7995391.html（其实我都是默认配置的。）
+3.创建和开发项目结构一样的包结构（方便直接复制过去），并在generatorConfig.xml里面配置你对应的mapper啊实体类啊的生成位置即可
+4.java主执行用文件：这里贴一下代码吧
+
+> ```java
+> public class GenMain {  
+>     public static void main(String[] args) {  
+>         List<String> warnings = new ArrayList<String>();  
+>         boolean overwrite = true;  
+>         String genCfg = "/generatorConfig.xml";//最主要的配置文件
+>         File configFile = new File(GenMain.class.getResource(genCfg).getFile());  
+>         ConfigurationParser cp = new ConfigurationParser(warnings);  
+>         Configuration config = null;  
+>         try {  
+>             config = cp.parseConfiguration(configFile);  
+>         } catch (IOException e) {  
+>             e.printStackTrace();  
+>         } catch (XMLParserException e) {  
+>             e.printStackTrace();  
+>         }  
+>         DefaultShellCallback callback = new DefaultShellCallback(overwrite);  
+>         MyBatisGenerator myBatisGenerator = null;  
+>         try {  
+>             myBatisGenerator = new MyBatisGenerator(config, callback, warnings);//主要执行方法
+>             System.out.println("生成完毕！！！！");
+>         } catch (InvalidConfigurationException e) {  
+>             e.printStackTrace();  
+>         }  
+>         try {  
+>             myBatisGenerator.generate(null);  
+>         } catch (SQLException e) {  
+>             e.printStackTrace();  
+>         } catch (IOException e) {  
+>             e.printStackTrace();  
+>         } catch (InterruptedException e) {  
+>             e.printStackTrace();  
+>         }  
+>     }  
+> }  
+> ```
+
+话说一早没学mybatis的时候好像说hibernate也有逆向工程的。啊 hibernate有个好处就是可以配置hbm2ddl.auto为update就可以自动生成表（当然详细的好像是说假如没有表则创建，假如表不一样的修改，假如一样则只插入数据）
+ 话说 这里吐槽一下 今天插入数据的时候一直报语法错误，我就纳闷了，明明逻辑是对的，然后找了好一阵，insert into 表名（字段，字段）values(值，值);这个有错吗？想了想，好像导出来的sql文件里面插入数据都是insert into 表名（\`字段\`,\`字段\`）values(值，值),然后试了下，发现ok了。。。查了下 原来是保留字冲突。我记得大二数据库那门课的时候也没有说过（用的sqlServer2008）算是涨姿势。

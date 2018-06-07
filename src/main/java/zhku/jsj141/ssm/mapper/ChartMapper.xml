@@ -22,47 +22,13 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zhku.jsj141.ssm.po.Chart">
-  	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-  		select last_insert_id()
+ 	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  		select LAST_INSERT_ID()
   	</selectKey>
-    insert into t_chart (from, to, 
-      message, time)
+    insert into t_chart (`from`, `to`, 
+      `message`, `time`)
     values (#{from,jdbcType=VARCHAR}, #{to,jdbcType=VARCHAR}, 
       #{message,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT})
-  </insert>
-  <insert id="insertSelective" parameterType="zhku.jsj141.ssm.po.Chart" >
-  	<selectKey keyProperty="ID" order="AFTER" resultType="java.lang.Integer">
-  		select last_insert_id()
-  	</selectKey>
-    insert into t_chart
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="from != null">
-        from,
-      </if>
-      <if test="to != null">
-        to,
-      </if>
-      <if test="message != null">
-        message,
-      </if>
-      <if test="time != null">
-        time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="from != null">
-        #{from,jdbcType=VARCHAR},
-      </if>
-      <if test="to != null">
-        #{to,jdbcType=VARCHAR},
-      </if>
-      <if test="message != null">
-        #{message,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null">
-        #{time,jdbcType=BIGINT},
-      </if>
-    </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="zhku.jsj141.ssm.po.Chart">
     update t_chart
