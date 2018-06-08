@@ -4,7 +4,7 @@
 
 **前言**
 
-哈哈 又是练习项目，就用了几天看的视频。速成，练练手
+~~哈哈 又是练习项目，就用了几天看的视频。速成，练练手~~
 
 ---------------
 
@@ -16,17 +16,17 @@
 
 （虽然还是不想用框架（angularjs也就上过选修课的程度））:sweat:
 
-结果发现websocket即时通信的话 根本除了登录，不需要操作数据库...又不想帮他们保存聊天记录。。。所以webSocket还是只当一个小功能插件之类的东西算了。
+~~结果发现websocket即时通信的话 根本除了登录，不需要操作数据库...又不想帮他们保存聊天记录。。。所以webSocket还是只当一个小功能插件之类的东西算了。~~
 
-再想一个题目。
+再想一个题目(先模仿一下B站）。
 
 -------------------
 
 暂定需求：
 
-注册可进
+~~注册可进~~
 
-激活可使用（拦截器咯）
+~~激活可使用（拦截器咯）~~
 
 ------
 
@@ -273,48 +273,53 @@ redis存放有期限的key-value（7天，（MD5之后的uid+4位时间）-（ui
 其他参考过的教程地址：
 
 https://blog.csdn.net/abcd898989/article/details/51316612
+
 1.配置需要的jar包
+
 2.generatorConfig.xml配置（也有模版（当然，连接数据库那部分自己改一下，或者加载一个db.properties））
+
 这里给个详细的解说链接：
 
-https://www.cnblogs.com/swugogo/p/7995391.html（其实我都是默认配置的。）
+https://www.cnblogs.com/swugogo/p/7995391.html（其实我都是默认配置的。
+
 3.创建和开发项目结构一样的包结构（方便直接复制过去），并在generatorConfig.xml里面配置你对应的mapper啊实体类啊的生成位置即可
+
 4.java主执行用文件：这里贴一下代码吧
 
 > ```java
 > public class GenMain {  
-> public static void main(String[] args) {  
-> List<String> warnings = new ArrayList<String>();  
-> boolean overwrite = true;  
-> String genCfg = "/generatorConfig.xml";//最主要的配置文件
-> File configFile = new File(GenMain.class.getResource(genCfg).getFile());  
-> ConfigurationParser cp = new ConfigurationParser(warnings);  
-> Configuration config = null;  
-> try {  
-> config = cp.parseConfiguration(configFile);  
-> } catch (IOException e) {  
-> e.printStackTrace();  
-> } catch (XMLParserException e) {  
-> e.printStackTrace();  
-> }  
-> DefaultShellCallback callback = new DefaultShellCallback(overwrite);  
-> MyBatisGenerator myBatisGenerator = null;  
-> try {  
-> myBatisGenerator = new MyBatisGenerator(config, callback, warnings);//主要执行方法
-> System.out.println("生成完毕！！！！");
-> } catch (InvalidConfigurationException e) {  
-> e.printStackTrace();  
-> }  
-> try {  
-> myBatisGenerator.generate(null);  
-> } catch (SQLException e) {  
-> e.printStackTrace();  
-> } catch (IOException e) {  
-> e.printStackTrace();  
-> } catch (InterruptedException e) {  
-> e.printStackTrace();  
-> }  
-> }  
+>   public static void main(String[] args) {  
+>   List<String> warnings = new ArrayList<String>();  
+>     boolean overwrite = true;  
+>     String genCfg = "/generatorConfig.xml";//最主要的配置文件
+>     File configFile = new File(GenMain.class.getResource(genCfg).getFile());  
+>     ConfigurationParser cp = new ConfigurationParser(warnings);  
+>     Configuration config = null;  
+>     try {  
+>     config = cp.parseConfiguration(configFile);  
+>     } catch (IOException e) {  
+>     e.printStackTrace();  
+>     } catch (XMLParserException e) {  
+>     e.printStackTrace();  
+>     }  
+>     DefaultShellCallback callback = new DefaultShellCallback(overwrite);  
+>     MyBatisGenerator myBatisGenerator = null;  
+>     try {  
+>     myBatisGenerator = new MyBatisGenerator(config, callback, warnings);//主要执行方法
+>     System.out.println("生成完毕！！！！");
+>     } catch (InvalidConfigurationException e) {  
+>     e.printStackTrace();  
+>     }  
+>     try {  
+>     myBatisGenerator.generate(null);  
+>     } catch (SQLException e) {  
+>     e.printStackTrace();  
+>     } catch (IOException e) {  
+>     e.printStackTrace();  
+>     } catch (InterruptedException e) {  
+>     e.printStackTrace();  
+>     }  
+>   }  
 > }  
 > ```
 
