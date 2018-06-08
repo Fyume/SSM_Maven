@@ -41,7 +41,8 @@
 	<!-- 内容显示部分 -->
 	<div id="Bottom" class="container">
 		<div id="indexMenu" class="indexMenu whiteBg">
-			<ul>
+			<div id="indexMenuBtn" class="hidden" onclick="indexMenuCompress(this)"><span class="glyphicon glyphicon-play" style="transform:rotate(90deg);"></span><span class="glyphicon glyphicon-play" style="transform:rotate(-90deg);margin-left:-1px;"></span></div>
+			<ul id="indexMenuUl">
 				<li title="动画" onclick="indexMenuScroll(this)">动画</li>
 				<li title="番剧" onclick="indexMenuScroll(this)">番剧</li>
 				<li title="音乐" onclick="indexMenuScroll(this)">音乐</li>

@@ -62,18 +62,51 @@ function getCon() {
 	};
 }
 function setTo($this) {
-	$("#toID").val($($this).attr("title"));
+	var title = $($this).attr("title");
+	$("#toID").val(title);
+	$("#FriendList li").each(function(){
+		if($(this).attr("title")==title){
+			$(this).css("background","#d0ffff");
+		}else{
+			$(this).css("background","#ffffff");
+		}
+	});
 }
 //将消息显示在网页上 
 function setMessageInnerHTML(innerHTML) {
 	var json = JSON.parse(innerHTML);//没写完
 	if(json.from!=null&&json.from!=''){
-		var div = '<div class="col-lg-12" style="padding-top:3px;"><div class="col-lg-12 text-center">—————————————————— <span>'+json.time+'</span> ——————————————————</div><div class="col-lg-12" style="padding-top:15px;"><img style="margin-left:-10px;" class="ChartImg" title="'+json.from+'" src="/SSM_Maven/img/user/img-default.jpg"/> <span style="color:red;font-size:18px;">'+json.from+'</span>:</div><div class="ChartBox btlr-0"><span style="color:#000000;font-size:18px;">'+json.message+'</span></div></div>';
-		$(div).appendTo($("#returnMessage"));
+		$(YourBox(json.time,json.from,json.message)).appendTo($("#returnMessage"));
 	}else{
-		var div = '<div class="col-lg-12" style="padding-top:3px;"><div class="col-lg-12 text-center">—————————————————— <span>'+json.time+'</span> ——————————————————</div><div class="col-lg-12 text-right" style="padding-top:15px;"><img class="ChartImg" title="'+json.from+'" src="/SSM_Maven/img/user/img-default.jpg"/></div><div class="pull-right text-right ChartBox btrr-0" style="margin-right: 50px;"><span style="color:#000000;font-size:18px;">'+json.message+'</span></div></div>';
-		$(div).appendTo($("#returnMessage"));
+		$(MyBox(json.time,json.message)).appendTo($("#returnMessage"));
 	}
+}
+function YourBox(time,from,message){
+	var colon = time.indexOf(":");
+	var colon_last = time.lastIndexOf(":");
+	var time_div = '';
+	if(colon!=-1&&colon_last!=-1){
+		var min = time.substring(colon+2,colon_last);
+		if(min=='0'){
+			time_div = '<div class="col-lg-12 text-center">—————————————————— <span>'+time+'</span> ——————————————————</div>';
+		}
+	}
+	var div = '<div class="col-lg-12" style="padding-top:3px;">'+time_div+'<div class="col-lg-12" style="padding-top:15px;"><img style="margin-left:-10px;" class="ChartImg" title="'+from+'" src="/SSM_Maven/img/user/img-default.jpg"/> <span style="color:red;font-size:18px;">'+from+'</span>:</div><div class="pull-left ChartBox btlr-0"><span style="color:#000000;font-size:18px;">'+message+'</span></div></div>';
+	return div;
+}
+function MyBox(time,message){
+	var s = JSON.parse(window.localStorage.getItem("userinfo"));
+	var colon = time.indexOf(":");
+	var colon_last = time.lastIndexOf(":");
+	var time_div = '';
+	if(colon!=-1&&colon_last!=-1){
+		var min = time.substring(colon+2,colon_last);
+		if(min=='0'){
+			time_div = '<div class="col-lg-12 text-center">—————————————————— <span>'+time+'</span> ——————————————————</div>';
+		}
+	}
+	var div = '<div class="col-lg-12" style="padding-top:3px;">'+time_div+'<div class="col-lg-12 text-right" style="padding-top:15px;"><img class="ChartImg" title="'+s.uid+'" src="/SSM_Maven/img/user/img-default.jpg"/></div><div class="pull-right text-right ChartBox btrr-0" style="margin-right: 50px;"><span style="color:#000000;font-size:18px;">'+message+'</span></div></div>';
+	return div;
 }
 function closeCon() {
 	websocket.close();
