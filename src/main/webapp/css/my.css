@@ -244,6 +244,7 @@
 
 .myA:hover {
 	color: #0080c0;
+	background-color:#f2f2f2;
 }
 .defaultUl li{
 	cursor:default;

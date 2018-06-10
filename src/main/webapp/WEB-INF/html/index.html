@@ -41,17 +41,19 @@
 	<!-- 内容显示部分 -->
 	<div id="Bottom" class="container">
 		<div id="indexMenu" class="indexMenu whiteBg">
-			<div id="indexMenuBtn" class="hidden" onclick="indexMenuCompress(this)"><span class="glyphicon glyphicon-play" style="transform:rotate(90deg);"></span><span class="glyphicon glyphicon-play" style="transform:rotate(-90deg);margin-left:-1px;"></span></div>
+			<div id="indexMenuBtn" class="hidden myA" onclick="indexMenuCompress(this)"><span class="glyphicon glyphicon-play" style="transform:rotate(90deg);"></span><span class="glyphicon glyphicon-play" style="transform:rotate(-90deg);margin-left:-1px;"></span></div>
+			<div id="indexMenuBtn2" class="whiteBg text-center myA hidden" onclick="MenuComUp()"><span class="glyphicon glyphicon-play" style="transform:rotate(-90deg);margin-left:-1px;"></span></div>
+			<div id="indexMenuBtn3" class="whiteBg text-center myA hidden" onclick="MenuComDown()"><span class="glyphicon glyphicon-play" style="transform:rotate(90deg);"></span></div>
 			<ul id="indexMenuUl">
-				<li title="动画" onclick="indexMenuScroll(this)">动画</li>
-				<li title="番剧" onclick="indexMenuScroll(this)">番剧</li>
-				<li title="音乐" onclick="indexMenuScroll(this)">音乐</li>
-				<li title="舞蹈" onclick="indexMenuScroll(this)">舞蹈</li>
-				<li title="游戏" onclick="indexMenuScroll(this)">游戏</li>
-				<li title="科技" onclick="indexMenuScroll(this)">科技</li>
-				<li title="生活" onclick="indexMenuScroll(this)">生活</li>
-				<li title="鬼畜" onclick="indexMenuScroll(this)">鬼畜</li>
-				<li title="电影" onclick="indexMenuScroll(this)">电影</li>
+				<li title="动画" onclick="indexMenuScroll(this)" value="1">动画</li>
+				<li title="番剧" onclick="indexMenuScroll(this)" value="2">番剧</li>
+				<li title="音乐" onclick="indexMenuScroll(this)" value="3">音乐</li>
+				<li title="舞蹈" onclick="indexMenuScroll(this)" value="4">舞蹈</li>
+				<li title="游戏" onclick="indexMenuScroll(this)" value="5">游戏</li>
+				<li title="科技" onclick="indexMenuScroll(this)" value="6">科技</li>
+				<li title="生活" onclick="indexMenuScroll(this)" value="7">生活</li>
+				<li title="鬼畜" onclick="indexMenuScroll(this)" value="8">鬼畜</li>
+				<li title="电影" onclick="indexMenuScroll(this)" value="9">电影</li>
 			</ul>
 		</div>
 		<div id="" class="col-lg-12" style="height:100px;"></div>

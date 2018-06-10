@@ -71,7 +71,9 @@ li:hover{
 	color:black;
 }
 #Right ul li a:hover{
-	background-color:#ffc184;
+	border-left:2px red solid;
+	border-right:2px red solid;
+	background-color:#f2f2f2;
 	color:black;
 	font-weight:550;
 }
@@ -137,15 +139,23 @@ li:hover{
 .indexMenu ul li{
 	border-left:1px #c0c0c0 dotted;
 	border-right:1px #c0c0c0 dotted;
+	border-top:2px red solid;
+	border-bottom:2px #c0c0c0 solid;
 	float:left;
 	width:90px;
 	height:50px;
 	padding-top:12px;
-}.indexMenu ul li:hover{
+	background-color:white;
+}
+.indexMenu ul li:hover{
 	border-bottom:2px red solid;
+	color:#000000;
+	font-weight:550;
+	background-color:#f2f2f2;
 }
 .indexMenu2 ul li{
 	margin-left:-40px;
+	border:1px #c0c0c0 solid;
 	border-bottom:1px #c0c0c0 dotted;
 	border-top:1px #c0c0c0 dotted;
 	float:left;
@@ -167,7 +177,7 @@ li:hover{
 .indexMenu2 ul li:last-child{
 	border-bottom-right-radius:20px;
 	border-bottom-left-radius:20px;
-	border-bottom:0;
+	border-bottom:1px #c0c0c0 solid;
 }
 #indexMenuBtn {
 	padding-top:5px;
@@ -180,11 +190,33 @@ li:hover{
 	top: 232px;
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
-	border-right: 0;
-	cursor:pointer;
+}
+#indexMenuBtn2{
+	position: fixed;
+	height: 20px;
+	width: 70px;
+	right: 10px;
+	top: 212px;
+	border: 1px #c0c0c0 solid;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+#indexMenuBtn3{
+	position: fixed;
+	height: 20px;
+	width: 70px;
+	right: 10px;
+	top: 282px;
+	border: 1px #c0c0c0 solid;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
 @keyframes Menu-li{
 	0%{margin-top:0px;}
+	100%{margin-top:-50px;}
+}
+@keyframes Menu-li-2{
+	0%{margin-top:-100px;}
 	100%{margin-top:-50px;}
 }
 @keyframes Menu-li-res{
@@ -202,9 +234,6 @@ li:hover{
 @keyframes Menu-res{
 	0%{height:50px;margin-top:200px;}
 	100%{height:450px;margin-top:0;}
-}
-.indexMenuBtn:hover{
-	color:#ff8c1a;
 }
 .Index-Bottom-Ul li{
 	text-align:left;

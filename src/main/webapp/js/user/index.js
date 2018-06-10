@@ -83,7 +83,7 @@ function closeAll(){
 	$("#topOn").css("display","block");
 	$("#indexMenu").removeClass("indexMenu");
 	$("#indexMenu").addClass("indexMenu2");
-	$("#indexMenu").next().css("hight","20px");
+	$("#indexMenu").next().css("height","20px");
 	$("#indexMenuBtn").removeClass("hidden");
 }
 function TopOpen($this){
@@ -96,7 +96,7 @@ function TopOpen($this){
 	$("#indexMenu").removeClass("indexMenu2");
 	$("#indexMenu").addClass("indexMenu");
 	$("#indexMenu").css("animation","");
-	$("#indexMenu").next().css("hight","100px");
+	$("#indexMenu").next().css("height","100px");
 	$("#indexMenuBtn").addClass("hidden");
 }
 function indexMenuScroll($this){
@@ -105,29 +105,36 @@ function indexMenuScroll($this){
 	$(document).scrollTop(top-100);
 }
 var Menu = true;
-function indexMenuCompress($this){
+function indexMenuCompress($this,animation){
 	Menu = false;
-	var i = 99,j=false;
+	var j=false;
+	if(animation==undefined){
+		animation = "Menu-li 0.5s";
+	}
 	$("#indexMenuUl li").each(function(){
-		$(this).css("z-index",i);
 		$(this).addClass("borderRadius");
 		if(!j){
 			$("#indexMenu").css("animation","Menu 0.5s");
 			$("#indexMenu").css("animation-fill-mode","forwards");j=true;
 		}else{
-			$(this).css("animation","Menu-li 0.5s");
+			$(this).css("animation",animation);
 			$(this).css("animation-fill-mode","forwards");
 		}
-		i--;
 	});
 	$($this).children("span:first-child").appendTo($($this));
 	$($this).attr("onclick","indexMenuOpen(this)");
+	$("#indexMenuBtn2").removeClass("hidden");
+	$("#indexMenuBtn3").removeClass("hidden");
 }
 function indexMenuOpen($this){
 	Menu = true;
 	var j=false;
+	var n = $("#indexMenuUl li:last-child").attr("value");//最后一个元素的序号
+	for(var i = 0;i<9-n;i++){
+		MenuComDown();
+	}
+	$("#indexMenuUl").css("z-index",1);
 	$("#indexMenuUl li").each(function(){
-		$(this).css("z-index",1);
 		$(this).removeClass("borderRadius");
 		if(!j){
 			$("#indexMenu").css("animation","Menu-res 0.5s");
@@ -139,6 +146,18 @@ function indexMenuOpen($this){
 	});
 	$($this).children("span:first-child").appendTo($($this));
 	$($this).attr("onclick","indexMenuCompress(this)");
+	$("#indexMenuBtn2").addClass("hidden");
+	$("#indexMenuBtn3").addClass("hidden");
+}
+function MenuComUp(){
+	$("#indexMenuUl li:last-child").css("animation","");
+	$("#indexMenuUl").prepend($("#indexMenuUl li:last-child"));
+	indexMenuCompress(undefined,"Menu-li-2 0.5s");
+}
+function MenuComDown(){
+	$("#indexMenuUl li:first-child").next().css("animation","");
+	$("#indexMenuUl").append($("#indexMenuUl li:first-child"));
+	indexMenuCompress();
 }
 /***注册***/
 function registerOn(){
